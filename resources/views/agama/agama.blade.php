@@ -35,6 +35,8 @@
                                         <td>{{ $item->desc_agama }}</td>
                                         <td>{{ $item->created_at->format('d-m-Y H:i') }}</td>
                                         <td>
+                                            <a href="javascript:void(0)" onClick="viewFunc({{ $item->id }})"
+                                                class="btn btn-primary btn-sm">Lihat</a>
                                             <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})"
                                                 class="btn btn-success btn-sm">Kemaskini</a>
                                             <a href="javascript:void(0)" onClick="deleteFunc({{ $item->id }})"
@@ -97,7 +99,7 @@
             $('#agama-modal').modal('show');
             $('#id').val('');
         }
-
+        //Edit data
         function editFunc(id) {
             $.ajax({
                 type: "POST",
@@ -116,7 +118,7 @@
                 }
             });
         }
-
+        //Delete Data
         function deleteFunc(id) {
             if (confirm("Delete record?")) {
                 $.ajax({
@@ -132,6 +134,25 @@
                     }
                 });
             }
+        }
+        //View Data
+        function viewFunc(id) {
+            $.ajax({
+                type: "POST",
+                url: "{{ url('view-agama') }}",
+                data: {
+                    id: id,
+                    _token: '{{ csrf_token() }}'
+                },
+                dataType: 'json',
+                success: function(res) {
+                    $('#agamaModalLabel').html("Lihat Agama");
+                    $('#agama-modal').modal('show');
+                    $('#id').val(res.id);
+                    $('#nama_agama').val(res.nama_agama);
+                    $('#desc_agama').val(res.desc_agama);
+                }
+            });
         }
 
         $('#AgamaForm').submit(function(e) {
