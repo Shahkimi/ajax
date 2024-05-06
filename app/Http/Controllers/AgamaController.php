@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+
 use App\Models\Agama;
 use Datatables;
+use Illuminate\Http\Request;
 
 class AgamaController extends Controller
 {
@@ -15,13 +16,9 @@ class AgamaController extends Controller
      */
     public function index()
     {
-        return datatables(Agama::select('id', 'nama_Agama', 'desc_Agama', 'created_at'))
-            ->editColumn('created_at', fn($request) => $request->created_at->format('d-m-Y H:i')) // format date time
-            ->addColumn('action', 'agama.agama-action')
-            ->rawColumns(['action'])
-            ->toJson(); // Use this method instead of make(true) for faster and more efficient
+        $agama = Agama::paginate(10);
+        return view('agama.agama', compact('agama'));
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -31,42 +28,42 @@ class AgamaController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nama_Agama' => 'required',
-            'desc_Agama' => 'required'
+        $validatedData = $request->validate([
+            'nama_agama' => 'required',
+            'desc_agama' => 'required'
         ], [], [
-            'nama_Agama' => 'nama agama',
-            'desc_Agama' => 'deskripsi agama'
+            'nama_agama' => 'nama agama',
+            'desc_agama' => 'deskripsi agama'
         ]);
 
-        $agama = Agama::updateOrCreate(['id' => $request->id], $request->only('nama_Agama', 'desc_Agama'));
+        $agama = Agama::updateOrCreate(['id' => $request->id], $validatedData);
 
-        return response()->json($agama, 200);
+        return response()->json($agama);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Agama  $agama
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request)
     {
-        $where = array('id' => $request->id);
-        $agama  = Agama::where($where)->first();
+        $agama = Agama::find($request->id);
 
-        return Response()->json($agama);
+        return response()->json($agama);
     }
+
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Agama  $agama
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
     {
-        $agama = Agama::where('id', $request->id)->delete();
+        Agama::destroy($request->id);
 
-        return Response()->json($agama);
+        return response()->json(['success' => true]);
     }
 }

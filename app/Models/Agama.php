@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Agama extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'nama_agama',
+        'desc_agama',
+    ];
 }

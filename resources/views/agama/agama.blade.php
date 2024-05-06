@@ -1,117 +1,99 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mt-2">
-
+    <div class="container mt-4">
         <div class="row">
-            <div class="col-lg-12 margin-tb">
-                <div class="pull-left">
+            <div class="col-lg-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2>Agama</h2>
-                </div>
-                <div class="pull-right mb-2">
                     <a class="btn btn-success" onClick="add()" href="javascript:void(0)">Tambah Agama</a>
                 </div>
+
+                @if ($message = Session::get('success'))
+                    <div class="alert alert-success">
+                        <p>{{ $message }}</p>
+                    </div>
+                @endif
+
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped" id="agama">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Agama</th>
+                                    <th>Deskripsi</th>
+                                    <th>Tarikh Dicipta</th>
+                                    <th>Tindakan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($agama as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->nama_agama }}</td>
+                                        <td>{{ $item->desc_agama }}</td>
+                                        <td>{{ $item->created_at->format('d-m-Y H:i') }}</td>
+                                        <td>
+                                            <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})"
+                                                class="btn btn-success btn-sm">Kemaskini</a>
+                                            <a href="javascript:void(0)" onClick="deleteFunc({{ $item->id }})"
+                                                class="btn btn-danger btn-sm">Hapus</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        {{-- <div class="d-flex justify-content-center"> --}}
+                            {!! $agama->links('pagination::bootstrap-5') !!}
+                        {{-- </div> --}}
+                    </div>
+                </div>
             </div>
-        </div>
-        @if ($message = Session::get('success'))
-            <div class="alert alert-success">
-                <p>{{ $message }}</p>
-            </div>
-        @endif
-        <div class="card-body">
-            <table class="table table-bordered" id="agama">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Agama</th>
-                        <th>Decription</th>
-                        <th>Created at</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-            </table>
         </div>
     </div>
-    <!-- boostrap agama model -->
-    <div class="modal fade" id="agama-modal" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+
+    <!-- Modal Tambah/Edit Agama -->
+    <div class="modal fade" id="agama-modal" tabindex="-1" aria-labelledby="agamaModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="AgamaModal"></h4>
+                    <h5 class="modal-title" id="agamaModalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="javascript:void(0)" id="AgamaForm" name="AgamaForm" class="form-horizontal"
-                        method="POST" enctype="multipart/form-data">
+                    <form id="AgamaForm" name="AgamaForm">
                         <input type="hidden" name="id" id="id">
-                        <div class="form-group">
-                            <label for="nama_Agama" class="col-sm-2 control-label">Nama Agama</label>
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control" id="nama_Agama" name="nama_Agama"
-                                    placeholder="Nama Agama" maxlength="50" required="">
-                            </div>
+                        <div class="mb-3">
+                            <label for="nama_agama" class="form-label">Nama Agama</label>
+                            <input type="text" class="form-control" id="nama_agama" name="nama_agama" maxlength="50"
+                                required>
                         </div>
-                        <div class="form-group">
-                            <label for="desc_Agama" class="col-sm-2 control-label">Description</label>
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control" id="desc_Agama" name="desc_Agama"
-                                    placeholder="Description Agama" maxlength="10" required="">
-                            </div>
-                        </div>
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-primary" id="btn-save">Save changes
-                            </button>
+                        <div class="mb-3">
+                            <label for="desc_agama" class="form-label">Deskripsi</label>
+                            <input type="text" class="form-control" id="desc_agama" name="desc_agama" maxlength="100"
+                                required>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary" id="btn-save" form="AgamaForm">Simpan</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- end bootstrap model -->
 
     <script type="text/javascript">
-        $(document).ready(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $('#agama').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: "{{ url('agama') }}",
-                columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
-                        data: 'nama_Agama',
-                        name: 'nama_Agama'
-                    },
-                    {
-                        data: 'desc_Agama',
-                        name: 'desc_Agama'
-                    },
-                    {
-                        data: 'created_at',
-                        name: 'created_at'
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false
-                    },
-                ],
-                order: [
-                    [0, 'desc']
-                ]
-            });
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
         });
 
         function add() {
             $('#AgamaForm').trigger("reset");
-            $('#AgamaModal').html("Tambah Agama");
+            $('#agamaModalLabel').html("Tambah Agama");
             $('#agama-modal').modal('show');
             $('#id').val('');
         }
@@ -121,40 +103,41 @@
                 type: "POST",
                 url: "{{ url('edit-agama') }}",
                 data: {
-                    id: id
+                    id: id,
+                    _token: '{{ csrf_token() }}'
                 },
                 dataType: 'json',
                 success: function(res) {
-                    $('#AgamaModal').html("Edit agama");
+                    $('#agamaModalLabel').html("Edit Agama");
                     $('#agama-modal').modal('show');
                     $('#id').val(res.id);
-                    $('#nama_Agama').val(res.nama_Agama);
-                    $('#desc_Agama').val(res.desc_Agama);
+                    $('#nama_agama').val(res.nama_agama);
+                    $('#desc_agama').val(res.desc_agama);
                 }
             });
         }
 
         function deleteFunc(id) {
-            if (confirm("Delete record?") == true) {
-                var id = id;
-                // ajax
+            if (confirm("Delete record?")) {
                 $.ajax({
                     type: "POST",
                     url: "{{ url('delete-agama') }}",
                     data: {
-                        id: id
+                        id: id,
+                        _token: '{{ csrf_token() }}'
                     },
                     dataType: 'json',
                     success: function(res) {
-                        var oTable = $('#agama').dataTable();
-                        oTable.fnDraw(false);
+                        window.location.reload();
                     }
                 });
             }
         }
+
         $('#AgamaForm').submit(function(e) {
             e.preventDefault();
             var formData = new FormData(this);
+            formData.append('_token', '{{ csrf_token() }}');
             $.ajax({
                 type: 'POST',
                 url: "{{ url('store-agama') }}",
@@ -162,12 +145,9 @@
                 cache: false,
                 contentType: false,
                 processData: false,
-                success: (data) => {
+                success: function(data) {
                     $("#agama-modal").modal('hide');
-                    var oTable = $('#agama').dataTable();
-                    oTable.fnDraw(false);
-                    $("#btn-save").html('Submit');
-                    $("#btn-save").attr("disabled", false);
+                    window.location.reload();
                 },
                 error: function(data) {
                     console.log(data);
