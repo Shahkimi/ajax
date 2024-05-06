@@ -1,0 +1,45 @@
+// script for cached data
+        $(document).ready(function() {
+        // Check if data is stored in browser's cache
+            var cachedData = localStorage.getItem('productsData');
+            if (cachedData) {
+                // If data is found in cache, load it into the DataTable
+                loadDataTable(JSON.parse(cachedData));
+            } else {
+                // If no data found in cache, fetch it from the server
+                fetchDataAndCache();
+            }
+        });
+
+        function fetchDataAndCache() {
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('products') }}",
+                dataType: 'json',
+                success: function(data) {
+                    // Cache the fetched data in localStorage
+                    localStorage.setItem('productsData', JSON.stringify(data));
+                    // Load the data into DataTable
+                    loadDataTable(data);
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        }
+
+        function loadDataTable(data) {
+            $('#products').DataTable({
+                processing: true,
+                serverSide: true,
+                data: data, // Use the cached data to populate DataTable
+                columns: [
+                    { data: 'id', name: 'id' },
+                    { data: 'name', name: 'name' },
+                    { data: 'quantity', name: 'quantity' },
+                    { data: 'created_at', name: 'created_at' },
+                    { data: 'action', name: 'action', orderable: false },
+                ],
+                order: [ [0, 'desc'] ]
+            });
+        }
