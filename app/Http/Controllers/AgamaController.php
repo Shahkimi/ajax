@@ -70,6 +70,7 @@ class AgamaController extends Controller
     public function view(Request $request)
     {
         $agama = Agama::find($request->id);
-        return view('agama.agama', compact('agama'));
+        return response()->json($agama);
     }
+
 }

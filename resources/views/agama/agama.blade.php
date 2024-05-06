@@ -47,7 +47,7 @@
                             </tbody>
                         </table>
                         {{-- <div class="d-flex justify-content-center"> --}}
-                            {!! $agama->links('pagination::bootstrap-5') !!}
+                        {!! $agama->links('pagination::bootstrap-5') !!}
                         {{-- </div> --}}
                     </div>
                 </div>
@@ -92,13 +92,18 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
         //Add Data
         function add() {
             $('#AgamaForm').trigger("reset");
             $('#agamaModalLabel').html("Tambah Agama");
             $('#agama-modal').modal('show');
             $('#id').val('');
+            $('#nama_agama').attr('readonly', false);
+            $('#desc_agama').attr('readonly', false);
+            $('#btn-save').show();
         }
+
         //Edit data
         function editFunc(id) {
             $.ajax({
@@ -115,9 +120,13 @@
                     $('#id').val(res.id);
                     $('#nama_agama').val(res.nama_agama);
                     $('#desc_agama').val(res.desc_agama);
+                    $('#nama_agama').attr('readonly', false);
+                    $('#desc_agama').attr('readonly', false);
+                    $('#btn-save').show();
                 }
             });
         }
+
         //Delete Data
         function deleteFunc(id) {
             if (confirm("Delete record?")) {
@@ -135,6 +144,7 @@
                 });
             }
         }
+
         //View Data
         function viewFunc(id) {
             $.ajax({
@@ -151,6 +161,9 @@
                     $('#id').val(res.id);
                     $('#nama_agama').val(res.nama_agama);
                     $('#desc_agama').val(res.desc_agama);
+                    $('#nama_agama').attr('readonly', true);
+                    $('#desc_agama').attr('readonly', true);
+                    $('#btn-save').hide();
                 }
             });
         }
