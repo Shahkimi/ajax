@@ -32,6 +32,7 @@ Route::get('agama', [AgamaController::class, 'index'])->middleware('auth');
 Route::post('store-agama', [AgamaController::class, 'store'])->middleware('auth');
 Route::post('edit-agama', [AgamaController::class, 'edit'])->middleware('auth');
 Route::post('delete-agama', [AgamaController::class, 'destroy'])->middleware('auth');
+Route::get('view-agama', [AgamaController::class, 'view'])->middleware('auth');
 
 Auth::routes();
 

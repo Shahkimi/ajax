@@ -66,4 +66,10 @@ class AgamaController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+    public function view(Request $request)
+    {
+        $agama = Agama::find($request->id);
+        return view('agama.agama', compact('agama'));
+    }
 }

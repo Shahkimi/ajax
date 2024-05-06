@@ -92,7 +92,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
+        //Add Data
         function add() {
             $('#AgamaForm').trigger("reset");
             $('#agamaModalLabel').html("Tambah Agama");
