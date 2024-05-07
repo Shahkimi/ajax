@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Datatables;
-use App\Models\Agama;
+use App\Models\KumpulanKategori;
 use Illuminate\Http\Request;
 
-class AgamaController extends Controller
+class KumpulanKategoriController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -71,5 +71,4 @@ class AgamaController extends Controller
         $agama = Agama::find($request->id);
         return response()->json($agama);
     }
-
 }

@@ -3,8 +3,11 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AgamaController;
+use App\Http\Controllers\BangsaController;
+use App\Http\Controllers\GelaranController;
+use App\Http\Controllers\KumpulanKategoriController;
 use App\Http\Controllers\ProductController;
-
+use App\Models\KumpulanKategori;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +36,27 @@ Route::post('store-agama', [AgamaController::class, 'store'])->middleware('auth'
 Route::post('edit-agama', [AgamaController::class, 'edit'])->middleware('auth');
 Route::post('delete-agama', [AgamaController::class, 'destroy'])->middleware('auth');
 Route::post('view-agama', [AgamaController::class, 'view'])->middleware('auth');
+
+// Bangsa Controller
+Route::get('bangsa', [BangsaController::class, 'index'])->middleware('auth');
+Route::post('store-bangsa', [BangsaController::class, 'store'])->middleware('auth');
+Route::post('edit-bangsa', [BangsaController::class, 'edit'])->middleware('auth');
+Route::post('delete-bangsa', [BangsaController::class, 'destroy'])->middleware('auth');
+Route::post('view-bangsa', [BangsaController::class, 'view'])->middleware('auth');
+
+// Gelaran Controller
+Route::get('gelaran', [GelaranController::class, 'index'])->middleware('auth');
+Route::post('store-gelaran', [GelaranController::class, 'store'])->middleware('auth');
+Route::post('edit-gelaran', [GelaranController::class, 'edit'])->middleware('auth');
+Route::post('delete-gelaran', [GelaranController::class, 'destroy'])->middleware('auth');
+Route::post('view-gelaran', [GelaranController::class, 'view'])->middleware('auth');
+
+// Kumpulan Kategori Controller
+Route::get('kkategori', [KumpulanKategoriController::class, 'index'])->middleware('auth');
+Route::post('store-kkategori', [KumpulanKategoriController::class, 'store'])->middleware('auth');
+Route::post('edit-kkategori', [KumpulanKategoriController::class, 'edit'])->middleware('auth');
+Route::post('delete-kkategori', [KumpulanKategoriController::class, 'destroy'])->middleware('auth');
+Route::post('view-kkategori', [KumpulanKategoriController::class, 'view'])->middleware('auth');
 
 Auth::routes();
 

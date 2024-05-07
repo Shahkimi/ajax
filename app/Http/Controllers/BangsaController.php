@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Datatables;
-use App\Models\Agama;
+use App\Models\Bangsa;
 use Illuminate\Http\Request;
 
-class AgamaController extends Controller
+class BangsaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class AgamaController extends Controller
      */
     public function index()
     {
-        $agama = Agama::paginate(10);
-        return view('agama.agama', compact('agama'));
+        $bangsa = Bangsa::paginate(10);
+        return view('bangsa.bangsa', compact('bangsa'));
     }
 
     /**
@@ -28,16 +28,16 @@ class AgamaController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nama_agama' => 'required',
-            'desc_agama' => 'required'
+            'nama_bangsa' => 'required',
+            'desc_bangsa' => 'required'
         ], [], [
-            'nama_agama' => 'nama agama',
-            'desc_agama' => 'deskripsi agama'
+            'nama_bangsa' => 'nama bangsa',
+            'desc_bangsa' => 'deskripsi bangsa'
         ]);
 
-        $agama = Agama::updateOrCreate(['id' => $request->id], $validatedData);
+        $bangsa = Bangsa::updateOrCreate(['id' => $request->id], $validatedData);
 
-        return response()->json($agama);
+        return response()->json($bangsa);
     }
 
     /**
@@ -48,9 +48,9 @@ class AgamaController extends Controller
      */
     public function edit(Request $request)
     {
-        $agama = Agama::find($request->id);
+        $bangsa = Bangsa::find($request->id);
 
-        return response()->json($agama);
+        return response()->json($bangsa);
     }
 
     /**
@@ -61,15 +61,15 @@ class AgamaController extends Controller
      */
     public function destroy(Request $request)
     {
-        Agama::destroy($request->id);
+        Bangsa::destroy($request->id);
 
         return response()->json(['success' => true]);
     }
 
     public function view(Request $request)
     {
-        $agama = Agama::find($request->id);
-        return response()->json($agama);
+        $bangsa = Bangsa::find($request->id);
+        return response()->json($bangsa);
     }
 
 }

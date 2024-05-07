@@ -18,9 +18,17 @@
                         <div>
                             Go to: <a href="/products">Products</a>
                         </div>
-                        <br>
                         <div>
                             Go to: <a href="/agama">Agama</a>
+                        </div>
+                        <div>
+                            Go to: <a href="/bangsa">Bangsa</a>
+                        </div>
+                        <div>
+                            Go to: <a href="/gelaran">Gelaran</a>
+                        </div>
+                        <div>
+                            Go to: <a href="/kkategori">Kumpulan Kategori</a>
                         </div>
                     </div>
                 </div>

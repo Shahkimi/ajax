@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Datatables;
-use App\Models\Agama;
+use App\Models\Gelaran;
 use Illuminate\Http\Request;
 
-class AgamaController extends Controller
+class GelaranController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class AgamaController extends Controller
      */
     public function index()
     {
-        $agama = Agama::paginate(10);
-        return view('agama.agama', compact('agama'));
+        $gelaran = Gelaran::paginate(10);
+        return view('gelaran.gelaran', compact('gelaran'));
     }
 
     /**
@@ -28,16 +28,16 @@ class AgamaController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nama_agama' => 'required',
-            'desc_agama' => 'required'
+            'nama_gelaran' => 'required',
+            'desc_gelaran' => 'required'
         ], [], [
-            'nama_agama' => 'nama agama',
-            'desc_agama' => 'deskripsi agama'
+            'nama_gelaran' => 'nama gelaran',
+            'desc_gelaran' => 'deskripsi gelaran'
         ]);
 
-        $agama = Agama::updateOrCreate(['id' => $request->id], $validatedData);
+        $gelaran = Gelaran::updateOrCreate(['id' => $request->id], $validatedData);
 
-        return response()->json($agama);
+        return response()->json($gelaran);
     }
 
     /**
@@ -48,9 +48,9 @@ class AgamaController extends Controller
      */
     public function edit(Request $request)
     {
-        $agama = Agama::find($request->id);
+        $gelaran = Gelaran::find($request->id);
 
-        return response()->json($agama);
+        return response()->json($gelaran);
     }
 
     /**
@@ -61,15 +61,14 @@ class AgamaController extends Controller
      */
     public function destroy(Request $request)
     {
-        Agama::destroy($request->id);
+        Gelaran::destroy($request->id);
 
         return response()->json(['success' => true]);
     }
 
     public function view(Request $request)
     {
-        $agama = Agama::find($request->id);
-        return response()->json($agama);
+        $gelaran = Gelaran::find($request->id);
+        return response()->json($gelaran);
     }
-
 }
