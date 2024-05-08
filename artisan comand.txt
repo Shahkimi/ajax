@@ -1,0 +1,38 @@
+############################################
+View & Model Section
+############################################
+
+# Make Model (with database)
+php artisan make:model XXX -m
+
+# Make Controller
+php artisan make:controller XXX
+
+# Controller with resource
+php artisan make:controller XXX -r
+
+############################################
+Database Section
+############################################
+
+# Make Seed Database
+php artisan make:seeder XXX
+
+# Run data seed
+php artisan db:seed --class=XXX
+
+# Migrate Db
+php artisan migrate
+
+############################################
+Run
+############################################
+
+[!] After create controller & model need to
+optimize then
+
+# Optimize All
+php artisan optimize
+
+# Serve
+php artisan serve
