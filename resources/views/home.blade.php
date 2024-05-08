@@ -28,7 +28,7 @@
                             Go to: <a href="/gelaran">Gelaran</a>
                         </div>
                         <div>
-                            Go to: <a href="/kkategori">Kumpulan Kategori</a>
+                            Go to: <a href="/gkategori">Kumpulan Kategori</a>
                         </div>
                     </div>
                 </div>

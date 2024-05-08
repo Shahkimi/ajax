@@ -5,8 +5,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2>Bangsa</h2>
-                    <a class="btn btn-success" onClick="add()" href="javascript:void(0)">Tambah Bangsa</a>
+                    <h2>Kumpulan kategori</h2>
+                    <a class="btn btn-success" onClick="add()" href="javascript:void(0)">Tambah Kategori</a>
                 </div>
 
                 @if ($message = Session::get('success'))
@@ -17,22 +17,22 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <table class="table table-bordered table-striped" id="bangsa">
+                        <table class="table table-bordered table-striped" id="gkategori">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Bangsa</th>
+                                    <th>Kategori</th>
                                     <th>Deskripsi</th>
                                     <th>Tarikh Dicipta</th>
                                     <th>Tindakan</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($bangsa as $item)
+                                @foreach ($gkategori as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->nama_bangsa }}</td>
-                                        <td>{{ $item->desc_bangsa }}</td>
+                                        <td>{{ $item->nama_kategori }}</td>
+                                        <td>{{ $item->desc_kategori }}</td>
                                         <td>{{ $item->created_at->format('d-m-Y H:i') }}</td>
                                         <td>
                                             <a href="javascript:void(0)" onClick="viewFunc({{ $item->id }})"
@@ -47,7 +47,7 @@
                             </tbody>
                         </table>
                         {{-- <div class="d-flex justify-content-center"> --}}
-                        {!! $bangsa->links('pagination::bootstrap-5') !!}
+                        {!! $gkategori->links('pagination::bootstrap-5') !!}
                         {{-- </div> --}}
                     </div>
                 </div>
@@ -55,32 +55,32 @@
         </div>
     </div>
 
-    <!-- Modal Tambah/Edit Bangsa -->
-    <div class="modal fade" id="bangsa-modal" tabindex="-1" aria-labelledby="bangsaModalLabel" aria-hidden="true">
+    <!-- Modal Tambah/Edit Kategori -->
+    <div class="modal fade" id="gkategori-modal" tabindex="-1" aria-labelledby="gkategoriModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="bangsaModalLabel"></h5>
+                    <h5 class="modal-title" id="gkategoriModalLabel"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="BangsaForm" name="BangsaForm">
+                    <form id="GkategoriForm" name="GkategoriForm">
                         <input type="hidden" name="id" id="id">
                         <div class="mb-3">
-                            <label for="nama_bangsa" class="form-label">Nama Bangsa</label>
-                            <input type="text" class="form-control" id="nama_bangsa" name="nama_bangsa" maxlength="50"
-                                required>
+                            <label for="nama_kategori" class="form-label">Kategori</label>
+                            <input type="text" class="form-control" id="nama_kategori" name="nama_kategori"
+                                maxlength="50" required>
                         </div>
                         <div class="mb-3">
-                            <label for="desc_bangsa" class="form-label">Deskripsi</label>
-                            <input type="text" class="form-control" id="desc_bangsa" name="desc_bangsa" maxlength="100"
-                                required>
+                            <label for="desc_kategori" class="form-label">Deskripsi</label>
+                            <input type="text" class="form-control" id="desc_kategori" name="desc_kategori"
+                                maxlength="100" required>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary" id="btn-save" form="BangsaForm">Simpan</button>
+                    <button type="submit" class="btn btn-primary" id="btn-save" form="GkategoriForm">Simpan</button>
                 </div>
             </div>
         </div>
@@ -95,12 +95,12 @@
 
         //Add Data
         function add() {
-            $('#BangsaForm').trigger("reset");
-            $('#bangsaModalLabel').html("Tambah Bangsa");
-            $('#bangsa-modal').modal('show');
+            $('#GkategoriForm').trigger("reset");
+            $('#gkategoriModalLabel').html("Tambah Kategori");
+            $('#gkategori-modal').modal('show');
             $('#id').val('');
-            $('#nama_bangsa').attr('readonly', false);
-            $('#desc_bangsa').attr('readonly', false);
+            $('#nama_kategori').attr('readonly', false);
+            $('#desc_kategori').attr('readonly', false);
             $('#btn-save').show();
         }
 
@@ -108,20 +108,20 @@
         function editFunc(id) {
             $.ajax({
                 type: "POST",
-                url: "{{ url('edit-bangsa') }}",
+                url: "{{ url('edit-gkategori') }}",
                 data: {
                     id: id,
                     _token: '{{ csrf_token() }}'
                 },
                 dataType: 'json',
                 success: function(res) {
-                    $('#bangsaModalLabel').html("Edit Bangsa");
-                    $('#bangsa-modal').modal('show');
+                    $('#gkategoriModalLabel').html("Edit Kategori");
+                    $('#gkategori-modal').modal('show');
                     $('#id').val(res.id);
-                    $('#nama_bangsa').val(res.nama_bangsa);
-                    $('#desc_bangsa').val(res.desc_bangsa);
-                    $('#nama_bangsa').attr('readonly', false);
-                    $('#desc_bangsa').attr('readonly', false);
+                    $('#nama_kategori').val(res.nama_kategori);
+                    $('#desc_kategori').val(res.desc_kategori);
+                    $('#nama_kategori').attr('readonly', false);
+                    $('#desc_kategori').attr('readonly', false);
                     $('#btn-save').show();
                 }
             });
@@ -132,7 +132,7 @@
             if (confirm("Delete record?")) {
                 $.ajax({
                     type: "POST",
-                    url: "{{ url('delete-bangsa') }}",
+                    url: "{{ url('delete-gkategori') }}",
                     data: {
                         id: id,
                         _token: '{{ csrf_token() }}'
@@ -149,38 +149,38 @@
         function viewFunc(id) {
             $.ajax({
                 type: "POST",
-                url: "{{ url('view-bangsa') }}",
+                url: "{{ url('view-gkategori') }}",
                 data: {
                     id: id,
                     _token: '{{ csrf_token() }}'
                 },
                 dataType: 'json',
                 success: function(res) {
-                    $('#bangsaModalLabel').html("Lihat Bangsa");
-                    $('#bangsa-modal').modal('show');
+                    $('#gkategoriModalLabel').html("Lihat Kategori");
+                    $('#gkategori-modal').modal('show');
                     $('#id').val(res.id);
-                    $('#nama_bangsa').val(res.nama_bangsa);
-                    $('#desc_bangsa').val(res.desc_bangsa);
-                    $('#nama_bangsa').attr('readonly', true);
-                    $('#desc_bangsa').attr('readonly', true);
+                    $('#nama_kategori').val(res.nama_kategori);
+                    $('#desc_kategori').val(res.desc_kategori);
+                    $('#nama_kategori').attr('readonly', true);
+                    $('#desc_kategori').attr('readonly', true);
                     $('#btn-save').hide();
                 }
             });
         }
 
-        $('#BangsaForm').submit(function(e) {
+        $('#GkategoriForm').submit(function(e) {
             e.preventDefault();
             var formData = new FormData(this);
             formData.append('_token', '{{ csrf_token() }}');
             $.ajax({
                 type: 'POST',
-                url: "{{ url('store-bangsa') }}",
+                url: "{{ url('store-gkategori') }}",
                 data: formData,
                 cache: false,
                 contentType: false,
                 processData: false,
                 success: function(data) {
-                    $("#bangsa-modal").modal('hide');
+                    $("#gkategori-modal").modal('hide');
                     window.location.reload();
                 },
                 error: function(data) {

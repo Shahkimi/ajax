@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Datatables;
-use App\Models\KumpulanKategori;
+use App\Models\Gkategori;
 use Illuminate\Http\Request;
 
-class KumpulanKategoriController extends Controller
+class GkategoriController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,9 @@ class KumpulanKategoriController extends Controller
      */
     public function index()
     {
-        $agama = Agama::paginate(10);
-        return view('agama.agama', compact('agama'));
+        $gkategori = Gkategori::paginate(10); // get data from model and paginate
+        // return view('gkategori.gkategori', compact('gkategori'));
+        return response()->view('gkategori.gkategori', compact('gkategori')); //test this
     }
 
     /**
@@ -28,16 +29,16 @@ class KumpulanKategoriController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nama_agama' => 'required',
-            'desc_agama' => 'required'
+            'nama_kategori' => 'required',
+            'desc_kategori' => 'required'
         ], [], [
-            'nama_agama' => 'nama agama',
-            'desc_agama' => 'deskripsi agama'
+            'nama_kategori' => 'nama katagori',
+            'desc_katagori' => 'deskripsi kategori'
         ]);
 
-        $agama = Agama::updateOrCreate(['id' => $request->id], $validatedData);
+        $gkategori = Gkategori::updateOrCreate(['id' => $request->id], $validatedData);
 
-        return response()->json($agama);
+        return response()->json($gkategori); // return data in json format
     }
 
     /**
@@ -48,9 +49,9 @@ class KumpulanKategoriController extends Controller
      */
     public function edit(Request $request)
     {
-        $agama = Agama::find($request->id);
+        $gkategori = Gkategori::find($request->id);
 
-        return response()->json($agama);
+        return response()->json($gkategori);
     }
 
     /**
@@ -61,14 +62,14 @@ class KumpulanKategoriController extends Controller
      */
     public function destroy(Request $request)
     {
-        Agama::destroy($request->id);
+        Gkategori::destroy($request->id);
 
         return response()->json(['success' => true]);
     }
 
     public function view(Request $request)
     {
-        $agama = Agama::find($request->id);
-        return response()->json($agama);
+        $gkategori = Gkategori::find($request->id);
+        return response()->json($gkategori);
     }
 }
