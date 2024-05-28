@@ -78,9 +78,7 @@ class GelaranSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-
         ];
-
         // Insert data into the gelarans table
         DB::table('gelarans')->insert($data);
     }

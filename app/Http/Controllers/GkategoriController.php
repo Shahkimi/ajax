@@ -16,8 +16,8 @@ class GkategoriController extends Controller
     public function index()
     {
         $gkategori = Gkategori::paginate(10); // get data from model and paginate
-        // return view('gkategori.gkategori', compact('gkategori'));
-        return response()->view('gkategori.gkategori', compact('gkategori')); //test this
+        return view('gkategori.gkategori', compact('gkategori'));
+        // return response()->view('gkategori.gkategori', compact('gkategori')); //test this
     }
 
     /**

@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Gkategori extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'nama_kategori',
+        'desc_kategori',
+    ];
 }
