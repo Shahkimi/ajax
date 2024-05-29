@@ -6,7 +6,9 @@ use App\Http\Controllers\AgamaController;
 use App\Http\Controllers\BangsaController;
 use App\Http\Controllers\GelaranController;
 use App\Http\Controllers\GkategoriController;
-use App\Http\Controllers\KumpulanKategoriController;
+use App\Http\Controllers\GcutiController;
+use App\Http\Controllers\GkcutiController;
+use App\Http\Controllers\KumpulanKategoriControllers;
 use App\Http\Controllers\ProductController;
 use App\Models\KumpulanKategori;
 
@@ -59,6 +61,18 @@ Route::post('edit-gkategori', [GkategoriController::class, 'edit'])->middleware(
 Route::post('delete-gkategori', [GkategoriController::class, 'destroy'])->middleware('auth');
 Route::post('view-gkategori', [GkategoriController::class, 'view'])->middleware('auth');
 
+// Kumpulan Cuti Controller
+Route::get('gcuti', [GcutiController::class, 'index'])->middleware('auth');
+Route::post('store-gcuti', [GcutiController::class, 'store'])->middleware('auth');
+Route::post('edit-gcuti', [GcutiController::class, 'edit'])->middleware('auth');
+Route::post('delete-gcuti', [GcutiController::class, 'destroy'])->middleware('auth');
+Route::post('view-gcuti', [GcutiController::class, 'view'])->middleware('auth');
+
+Route::get('gkcuti', [GkcutiController::class, 'index'])->middleware('auth');
+Route::post('store-gkcuti', [GkcutiController::class, 'store'])->middleware('auth');
+Route::post('edit-gkcuti', [GkcutiController::class, 'edit'])->middleware('auth');
+Route::post('delete-gkcuti', [GkcutiController::class, 'destroy'])->middleware('auth');
+Route::post('view-gkcuti', [GkcutiController::class, 'view'])->middleware('auth');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

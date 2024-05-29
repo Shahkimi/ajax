@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 
-class KumpulanKategoriSeeder extends Seeder
+class GkategoriSeeder extends Seeder
 {
     /**
      * Run the database seeds.

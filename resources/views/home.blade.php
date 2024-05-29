@@ -16,7 +16,7 @@
 
                         {{ __('You are logged in!') }}
                         <div>
-                            Go to: <a href="/products">Products</a>
+                            Kawalan Section
                         </div>
                         <div>
                             Go to: <a href="/agama">Agama</a>
@@ -29,6 +29,10 @@
                         </div>
                         <div>
                             Go to: <a href="/gkategori">Kumpulan Kategori</a>
+                        </div>
+                        <div>
+                            Go to: <a href="/gcuti">Jenis Cuti</a>
+                            Go to: <a href="/gkcuti">Jenis Kumpulan Cuti</a>
                         </div>
                     </div>
                 </div>
