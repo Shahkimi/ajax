@@ -65,7 +65,7 @@
                     <form id="GkcutiForm" name="GkcutiForm">
                         <input type="hidden" name="id" id="id">
                         <div class="mb-3">
-                            <label for="nama_kategori" class="form-label">Kategori Cuti</label>
+                            <label for="kategori_cuti" class="form-label">Kategori Cuti</label>
                             <input type="text" class="form-control" id="kategori_cuti" name="kategori_cuti"
                                 maxlength="50" required>
                         </div>
@@ -156,7 +156,7 @@
             });
         }
 
-        $('#GkategoriForm').submit(function(e) {
+        $('#GkcutiForm').submit(function(e) {
             e.preventDefault();
             var formData = new FormData(this);
             formData.append('_token', '{{ csrf_token() }}');
@@ -168,7 +168,7 @@
                 contentType: false,
                 processData: false,
                 success: function(data) {
-                    $("#gkategori-modal").modal('hide');
+                    $("#gkcuti-modal").modal('hide');
                     window.location.reload();
                 },
                 error: function(data) {

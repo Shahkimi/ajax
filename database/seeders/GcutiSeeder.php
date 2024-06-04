@@ -103,5 +103,7 @@ class GcutiSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ];
+        // Insert data into the gelarans table
+        DB::table('gcutis')->insert($data);
     }
 }
