@@ -72,6 +72,8 @@ Route::post('store-gkcuti', [GkcutiController::class, 'store'])->middleware('aut
 Route::post('edit-gkcuti', [GkcutiController::class, 'edit'])->middleware('auth');
 Route::post('delete-gkcuti', [GkcutiController::class, 'destroy'])->middleware('auth');
 Route::post('view-gkcuti', [GkcutiController::class, 'view'])->middleware('auth');
+
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

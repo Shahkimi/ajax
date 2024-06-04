@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Datatables;
 use App\Models\Gcuti;
+use App\Models\Gkcuti;
 use Illuminate\Http\Request;
 
 class GcutiController extends Controller
@@ -16,8 +17,9 @@ class GcutiController extends Controller
      */
     public function index()
     {
+        $gkcutiOptions = Gkcuti::pluck('kategori_cuti', 'id'); // Fetch kategori_cuti as options
         $gcuti = Gcuti::paginate(10); // get data from model and paginate
-        return view('gcuti.gcuti', compact('gcuti'));
+        return view('gcuti.gcuti', compact('gcuti', 'gkcutiOptions'));
     }
 
     /**
@@ -30,10 +32,12 @@ class GcutiController extends Controller
     {
         $validatedData = $request->validate([
             'kategori_cuti' => 'required',
-            'jenis_cuti' => 'required'
+            'jenis_cuti' => 'required',
+            'gkcuti_id' => 'required|exists:gkcutis,id'
         ], [], [
             'kategori_cuti' => 'Kategori Cuti',
-            'jenis_cuti' => 'Jenis Cuti'
+            'jenis_cuti' => 'Jenis Cuti',
+            'gkcuti_id' => 'Kategori Cuti Option'
         ]);
 
         $gcuti = Gcuti::updateOrCreate(['id' => $request->id], $validatedData);

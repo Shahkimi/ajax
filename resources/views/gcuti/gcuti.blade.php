@@ -35,12 +35,15 @@
                                         <td>{{ $item->jenis_cuti }}</td>
                                         <td>{{ $item->created_at->format('d-m-Y H:i') }}</td>
                                         <td>
-                                            <a href="javascript:void(0)" onClick="viewFunc({{ $item->id }})"
-                                                class="btn btn-primary btn-sm">Lihat</a>
-                                            <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})"
-                                                class="btn btn-success btn-sm">Kemaskini</a>
-                                            <a href="javascript:void(0)" onClick="deleteFunc({{ $item->id }})"
-                                                class="btn btn-danger btn-sm">Hapus</a>
+                                            <a href="javascript:void(0)" onClick="viewFunc({{ $item->id }})" class="btn btn-primary btn-sm" title="Lihat" data-toggle="tooltip">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})" class="btn btn-success btn-sm" title="Kemaskini" data-toggle="tooltip">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a href="javascript:void(0)" onClick="deleteFunc({{ $item->id }})" class="btn btn-danger btn-sm" title="Hapus" data-toggle="tooltip">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -67,20 +70,23 @@
                     <form id="GcutiForm" name="GcutiForm">
                         <input type="hidden" name="id" id="id">
                         <div class="mb-3">
-                            <label for="nama_kategori" class="form-label">Kategori Cuti</label>
-                            <input type="text" class="form-control" id="kategori_cuti" name="kategori_cuti"
-                                maxlength="50" required>
+                            <label for="gkcuti_id" class="form-label">Kategori Cuti Options</label>
+                            <select class="form-control" id="gkcuti_id" name="gkcuti_id" required>
+                                <option value="">Pilih Kategori Cuti</option>
+                                @foreach ($gkcutiOptions as $id => $kategori_cuti)
+                                    <option value="{{ $id }}">{{ $kategori_cuti }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="mb-3">
-                            <label for="desc_kategori" class="form-label">Jenis Cuti</label>
-                            <input type="text" class="form-control" id="jenis_cuti" name="jenis_cuti"
-                                maxlength="100" required>
+                            <label for="jenis_cuti" class="form-label">Jenis Cuti</label>
+                            <input type="text" class="form-control" id="jenis_cuti" name="jenis_cuti" maxlength="100" required>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary" id="btn-save" form="GkategoriForm">Simpan</button>
+                    <button type="submit" class="btn btn-primary" id="btn-save" form="GcutiForm">Simpan</button>
                 </div>
             </div>
         </div>
@@ -93,18 +99,18 @@
             }
         });
 
-        //Add Data
+        // Add Data
         function add() {
             $('#GcutiForm').trigger("reset");
             $('#gcutiModalLabel').html("Tambah Kategori Cuti");
             $('#gcuti-modal').modal('show');
             $('#id').val('');
-            $('#nkategori_cuti').attr('readonly', false);
+            $('#kategori_cuti').attr('readonly', false);
             $('#jenis_cuti').attr('readonly', false);
             $('#btn-save').show();
         }
 
-        //Edit data
+        // Edit Data
         function editFunc(id) {
             $.ajax({
                 type: "POST",
@@ -120,6 +126,7 @@
                     $('#id').val(res.id);
                     $('#kategori_cuti').val(res.kategori_cuti);
                     $('#jenis_cuti').val(res.jenis_cuti);
+                    $('#gkcuti_id').val(res.gkcuti_id);
                     $('#kategori_cuti').attr('readonly', false);
                     $('#jenis_cuti').attr('readonly', false);
                     $('#btn-save').show();
@@ -127,7 +134,7 @@
             });
         }
 
-        //Delete Data
+        // Delete Data
         function deleteFunc(id) {
             if (confirm("Delete record?")) {
                 $.ajax({
@@ -145,7 +152,7 @@
             }
         }
 
-        //View Data
+        // View Data
         function viewFunc(id) {
             $.ajax({
                 type: "POST",
@@ -161,6 +168,7 @@
                     $('#id').val(res.id);
                     $('#kategori_cuti').val(res.kategori_cuti);
                     $('#jenis_cuti').val(res.jenis_cuti);
+                    $('#gkcuti_id').val(res.gkcuti_id);
                     $('#kategori_cuti').attr('readonly', true);
                     $('#jenis_cuti').attr('readonly', true);
                     $('#btn-save').hide();
@@ -168,7 +176,8 @@
             });
         }
 
-        $('#GkategoriForm').submit(function(e) {
+        // Form Submission
+        $('#GcutiForm').submit(function(e) {
             e.preventDefault();
             var formData = new FormData(this);
             formData.append('_token', '{{ csrf_token() }}');
@@ -180,7 +189,7 @@
                 contentType: false,
                 processData: false,
                 success: function(data) {
-                    $("#gkategori-modal").modal('hide');
+                    $("#gcuti-modal").modal('hide');
                     window.location.reload();
                 },
                 error: function(data) {
