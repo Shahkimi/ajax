@@ -27,11 +27,12 @@ class GkcutiController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate the request data
         $validatedData = $request->validate([
-            'kategori_cuti' => 'required',
+            'kategori_cuti' => 'required'
         ], [], [
-            'kategori_cuti' => 'Kategori Cuti',
-        ]); // data validation
+            'kategori_cuti' => 'Kategori Cuti'
+        ]);
 
         $gkcuti = Gkcuti::updateOrCreate(['id' => $request->id], $validatedData);
 

@@ -8,9 +8,7 @@ use App\Http\Controllers\GelaranController;
 use App\Http\Controllers\GkategoriController;
 use App\Http\Controllers\GcutiController;
 use App\Http\Controllers\GkcutiController;
-use App\Http\Controllers\KumpulanKategoriControllers;
 use App\Http\Controllers\ProductController;
-use App\Models\KumpulanKategori;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +66,7 @@ Route::post('edit-gcuti', [GcutiController::class, 'edit'])->middleware('auth');
 Route::post('delete-gcuti', [GcutiController::class, 'destroy'])->middleware('auth');
 Route::post('view-gcuti', [GcutiController::class, 'view'])->middleware('auth');
 
+// Category Kumpulan Cuti Controller
 Route::get('gkcuti', [GkcutiController::class, 'index'])->middleware('auth');
 Route::post('store-gkcuti', [GkcutiController::class, 'store'])->middleware('auth');
 Route::post('edit-gkcuti', [GkcutiController::class, 'edit'])->middleware('auth');
