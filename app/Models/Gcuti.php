@@ -10,7 +10,12 @@ class Gcuti extends Model
     use HasFactory;
 
     protected $fillable = [
-        'kategori_cuti',
+        'gkcuti_id',
         'jenis_cuti',
     ];
+
+    public function gkcuti()
+    {
+        return $this->belongsTo(Gkcuti::class);
+    }
 }

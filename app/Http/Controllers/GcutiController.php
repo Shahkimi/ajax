@@ -18,7 +18,7 @@ class GcutiController extends Controller
     public function index()
     {
         $gkcutiOptions = Gkcuti::pluck('kategori_cuti', 'id'); // Fetch kategori_cuti as options
-        $gcuti = Gcuti::paginate(10); // get data from model and paginate
+        $gcuti = Gcuti::with('gkcuti')->paginate(10); // get data from model and paginate
         return view('gcuti.gcuti', compact('gcuti', 'gkcutiOptions'));
     }
 
@@ -31,13 +31,11 @@ class GcutiController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'kategori_cuti' => 'required',
-            'jenis_cuti' => 'required',
-            'gkcuti_id' => 'required|exists:gkcutis,id'
+            'gkcuti_id' => 'required|exists:gkcutis,id',
+            'jenis_cuti' => 'required|string|max:255',
         ], [], [
-            'kategori_cuti' => 'Kategori Cuti',
+            'gkcuti_id' => 'Kategori Cuti',
             'jenis_cuti' => 'Jenis Cuti',
-            'gkcuti_id' => 'Kategori Cuti Option'
         ]);
 
         $gcuti = Gcuti::updateOrCreate(['id' => $request->id], $validatedData);
@@ -53,7 +51,7 @@ class GcutiController extends Controller
      */
     public function edit(Request $request)
     {
-        $gcuti = Gcuti::find($request->id);
+        $gcuti = Gcuti::with('gkcuti')->find($request->id);
 
         return response()->json($gcuti);
     }
@@ -73,7 +71,7 @@ class GcutiController extends Controller
 
     public function view(Request $request)
     {
-        $gcuti = Gcuti::find($request->id);
+        $gcuti = Gcuti::with('gkcuti')->find($request->id);
         return response()->json($gcuti);
     }
 }

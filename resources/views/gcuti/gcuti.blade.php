@@ -31,19 +31,13 @@
                                 @foreach ($gcuti as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->kategori_cuti }}</td>
+                                        <td>{{ $item->gkcuti->kategori_cuti }}</td>
                                         <td>{{ $item->jenis_cuti }}</td>
                                         <td>{{ $item->created_at->format('d-m-Y H:i') }}</td>
                                         <td>
-                                            <a href="javascript:void(0)" onClick="viewFunc({{ $item->id }})" class="btn btn-primary btn-sm" title="Lihat" data-toggle="tooltip">
-                                                <i class="bi bi-eye"></i>
-                                            </a>
-                                            <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})" class="btn btn-success btn-sm" title="Kemaskini" data-toggle="tooltip">
-                                                <i class="bi bi-pencil"></i>
-                                            </a>
-                                            <a href="javascript:void(0)" onClick="deleteFunc({{ $item->id }})" class="btn btn-danger btn-sm" title="Hapus" data-toggle="tooltip">
-                                                <i class="bi bi-trash"></i>
-                                            </a>
+                                            <a href="javascript:void(0)" onClick="viewFunc({{ $item->id }})" class="btn btn-primary btn-sm">Lihat</a>
+                                            <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})" class="btn btn-success btn-sm">Kemaskini</a>
+                                            <a href="javascript:void(0)" onClick="deleteFunc({{ $item->id }})" class="btn btn-danger btn-sm">Hapus</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -72,7 +66,7 @@
                         <div class="mb-3">
                             <label for="gkcuti_id" class="form-label">Kategori Cuti Options</label>
                             <select class="form-control" id="gkcuti_id" name="gkcuti_id" required>
-                                <option value="">Pilih Kategori Cuti</option>
+                                <option value="" selected disabled>Pilih Kategori Cuti</option>
                                 @foreach ($gkcutiOptions as $id => $kategori_cuti)
                                     <option value="{{ $id }}">{{ $kategori_cuti }}</option>
                                 @endforeach
@@ -105,8 +99,8 @@
             $('#gcutiModalLabel').html("Tambah Kategori Cuti");
             $('#gcuti-modal').modal('show');
             $('#id').val('');
-            $('#kategori_cuti').attr('readonly', false);
-            $('#jenis_cuti').attr('readonly', false);
+            $('#gkcuti_id').val('');
+            $('#jenis_cuti').val('');
             $('#btn-save').show();
         }
 
@@ -124,11 +118,8 @@
                     $('#gcutiModalLabel').html("Edit Kategori");
                     $('#gcuti-modal').modal('show');
                     $('#id').val(res.id);
-                    $('#kategori_cuti').val(res.kategori_cuti);
-                    $('#jenis_cuti').val(res.jenis_cuti);
                     $('#gkcuti_id').val(res.gkcuti_id);
-                    $('#kategori_cuti').attr('readonly', false);
-                    $('#jenis_cuti').attr('readonly', false);
+                    $('#jenis_cuti').val(res.jenis_cuti);
                     $('#btn-save').show();
                 }
             });
@@ -166,10 +157,9 @@
                     $('#gcutiModalLabel').html("Lihat Kategori");
                     $('#gcuti-modal').modal('show');
                     $('#id').val(res.id);
-                    $('#kategori_cuti').val(res.kategori_cuti);
-                    $('#jenis_cuti').val(res.jenis_cuti);
                     $('#gkcuti_id').val(res.gkcuti_id);
-                    $('#kategori_cuti').attr('readonly', true);
+                    $('#jenis_cuti').val(res.jenis_cuti);
+                    $('#gkcuti_id').attr('disabled', true);
                     $('#jenis_cuti').attr('readonly', true);
                     $('#btn-save').hide();
                 }

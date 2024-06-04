@@ -25,54 +25,57 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Product Controller
-Route::get('products', [ProductController::class, 'index'])->middleware('auth');
-Route::post('store-product', [ProductController::class, 'store'])->middleware('auth');
-Route::post('edit-product', [ProductController::class, 'edit'])->middleware('auth');
-Route::post('delete-product', [ProductController::class, 'destroy'])->middleware('auth');
+Route::middleware('auth')->group(function () {
+    Route::resource('products', ProductController::class);
 
-// Agama Controller
-Route::get('agama', [AgamaController::class, 'index'])->middleware('auth');
-Route::post('store-agama', [AgamaController::class, 'store'])->middleware('auth');
-Route::post('edit-agama', [AgamaController::class, 'edit'])->middleware('auth');
-Route::post('delete-agama', [AgamaController::class, 'destroy'])->middleware('auth');
-Route::post('view-agama', [AgamaController::class, 'view'])->middleware('auth');
+    // Agama routes
+    Route::get('agama', [AgamaController::class, 'index']);
+    Route::post('store-agama', [AgamaController::class, 'store']);
+    Route::post('edit-agama', [AgamaController::class, 'edit']);
+    Route::post('delete-agama', [AgamaController::class, 'destroy']);
+    Route::post('view-agama', [AgamaController::class, 'view']);
 
-// Bangsa Controller
-Route::get('bangsa', [BangsaController::class, 'index'])->middleware('auth');
-Route::post('store-bangsa', [BangsaController::class, 'store'])->middleware('auth');
-Route::post('edit-bangsa', [BangsaController::class, 'edit'])->middleware('auth');
-Route::post('delete-bangsa', [BangsaController::class, 'destroy'])->middleware('auth');
-Route::post('view-bangsa', [BangsaController::class, 'view'])->middleware('auth');
+    // Bangsa routes
+    Route::get('bangsa', [BangsaController::class, 'index']);
+    Route::post('store-bangsa', [BangsaController::class, 'store']);
+    Route::post('edit-bangsa', [BangsaController::class, 'edit']);
+    Route::post('delete-bangsa', [BangsaController::class, 'destroy']);
+    Route::post('view-bangsa', [BangsaController::class, 'view']);
 
-// Gelaran Controller
-Route::get('gelaran', [GelaranController::class, 'index'])->middleware('auth');
-Route::post('store-gelaran', [GelaranController::class, 'store'])->middleware('auth');
-Route::post('edit-gelaran', [GelaranController::class, 'edit'])->middleware('auth');
-Route::post('delete-gelaran', [GelaranController::class, 'destroy'])->middleware('auth');
-Route::post('view-gelaran', [GelaranController::class, 'view'])->middleware('auth');
+    // Gelaran routes
+    Route::get('gelaran', [GelaranController::class, 'index']);
+    Route::post('store-gelaran', [GelaranController::class, 'store']);
+    Route::post('edit-gelaran', [GelaranController::class, 'edit']);
+    Route::post('delete-gelaran', [GelaranController::class, 'destroy']);
+    Route::post('view-gelaran', [GelaranController::class, 'view']);
 
-// Kumpulan Kategori Controller
-Route::get('gkategori', [GkategoriController::class, 'index'])->middleware('auth');
-Route::post('store-gkategori', [GkategoriController::class, 'store'])->middleware('auth');
-Route::post('edit-gkategori', [GkategoriController::class, 'edit'])->middleware('auth');
-Route::post('delete-gkategori', [GkategoriController::class, 'destroy'])->middleware('auth');
-Route::post('view-gkategori', [GkategoriController::class, 'view'])->middleware('auth');
+    // Kumpulan Kategori routes
+    Route::get('gkategori', [GkategoriController::class, 'index']);
+    Route::post('store-gkategori', [GkategoriController::class, 'store']);
+    Route::post('edit-gkategori', [GkategoriController::class, 'edit']);
+    Route::post('delete-gkategori', [GkategoriController::class, 'destroy']);
+    Route::post('view-gkategori', [GkategoriController::class, 'view']);
 
-// Kumpulan Cuti Controller
-Route::get('gcuti', [GcutiController::class, 'index'])->middleware('auth');
-Route::post('store-gcuti', [GcutiController::class, 'store'])->middleware('auth');
-Route::post('edit-gcuti', [GcutiController::class, 'edit'])->middleware('auth');
-Route::post('delete-gcuti', [GcutiController::class, 'destroy'])->middleware('auth');
-Route::post('view-gcuti', [GcutiController::class, 'view'])->middleware('auth');
+    // Kumpulan Cuti routes
+    Route::get('gcuti', [GcutiController::class, 'index']);
+    Route::post('store-gcuti', [GcutiController::class, 'store']);
+    Route::post('edit-gcuti', [GcutiController::class, 'edit']);
+    Route::post('delete-gcuti', [GcutiController::class, 'destroy']);
+    Route::post('view-gcuti', [GcutiController::class, 'view']);
 
-// Category Kumpulan Cuti Controller
-Route::get('gkcuti', [GkcutiController::class, 'index'])->middleware('auth');
-Route::post('store-gkcuti', [GkcutiController::class, 'store'])->middleware('auth');
-Route::post('edit-gkcuti', [GkcutiController::class, 'edit'])->middleware('auth');
-Route::post('delete-gkcuti', [GkcutiController::class, 'destroy'])->middleware('auth');
-Route::post('view-gkcuti', [GkcutiController::class, 'view'])->middleware('auth');
+    // Category Kumpulan Cuti routes
+    Route::get('/gkcuti', [GkcutiController::class, 'index'])->name('gkcuti.index');
+    Route::post('/gkcuti', [GkcutiController::class, 'store'])->name('gkcuti.store');
+    Route::get('/gkcuti/{id}/edit', [GkcutiController::class, 'edit'])->name('gkcuti.edit');
+    Route::delete('/gkcuti/{id}', [GkcutiController::class, 'destroy'])->name('gkcuti.destroy');
+    Route::get('/gkcuti/{id}', [GkcutiController::class, 'view'])->name('gkcuti.view');
 
+    Route::post('view-agama', [AgamaController::class, 'view']);
+    Route::post('view-bangsa', [BangsaController::class, 'view']);
+    Route::post('view-gelaran', [GelaranController::class, 'view']);
+    Route::post('view-gkategori', [GkategoriController::class, 'view']);
+    Route::post('view-gcuti', [GcutiController::class, 'view']);
+});
 
 Auth::routes();
 

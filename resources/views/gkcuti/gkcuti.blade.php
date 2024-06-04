@@ -73,7 +73,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary" id="btn-save" form="GkategoriForm">Simpan</button>
+                    <button type="submit" class="btn btn-primary" id="btn-save" form="GkcutiForm">Simpan</button>
                 </div>
             </div>
         </div>
@@ -99,13 +99,8 @@
         //Edit data
         function editFunc(id) {
             $.ajax({
-                type: "POST",
-                url: "{{ url('edit-gkcuti') }}",
-                data: {
-                    id: id,
-                    _token: '{{ csrf_token() }}'
-                },
-                dataType: 'json',
+                type: "GET",
+                url: "/gkcuti/" + id + "/edit",
                 success: function(res) {
                     $('#gkcutiModalLabel').html("Edit Kategori");
                     $('#gkcuti-modal').modal('show');
@@ -121,13 +116,8 @@
         function deleteFunc(id) {
             if (confirm("Delete record?")) {
                 $.ajax({
-                    type: "POST",
-                    url: "{{ url('delete-gkcuti') }}",
-                    data: {
-                        id: id,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    dataType: 'json',
+                    type: "DELETE",
+                    url: "/gkcuti/" + id,
                     success: function(res) {
                         window.location.reload();
                     }
@@ -138,13 +128,8 @@
         //View Data
         function viewFunc(id) {
             $.ajax({
-                type: "POST",
-                url: "{{ url('view-gkcuti') }}",
-                data: {
-                    id: id,
-                    _token: '{{ csrf_token() }}'
-                },
-                dataType: 'json',
+                type: "GET",
+                url: "/gkcuti/" + id,
                 success: function(res) {
                     $('#gkcutiModalLabel').html("Lihat Kategori");
                     $('#gkcuti-modal').modal('show');
@@ -159,10 +144,9 @@
         $('#GkcutiForm').submit(function(e) {
             e.preventDefault();
             var formData = new FormData(this);
-            formData.append('_token', '{{ csrf_token() }}');
             $.ajax({
                 type: 'POST',
-                url: "{{ url('store-gkcuti') }}",
+                url: "{{ route('gkcuti.store') }}",
                 data: formData,
                 cache: false,
                 contentType: false,

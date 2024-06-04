@@ -11,4 +11,9 @@ class Gkcuti extends Model
     protected $fillable = [
         'kategori_cuti',
     ];
+
+    public function gcutis()
+    {
+        return $this->hasMany(Gcuti::class);
+    }
 }
