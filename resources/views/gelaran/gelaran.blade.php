@@ -21,7 +21,7 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Gelrana</th>
+                                    <th>Gelaran</th>
                                     <th>Deskripsi</th>
                                     <th>Tarikh Dicipta</th>
                                     <th>Tindakan</th>

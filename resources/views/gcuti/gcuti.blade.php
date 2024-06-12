@@ -23,7 +23,6 @@
                                     <th>ID</th>
                                     <th>Kategori Cuti</th>
                                     <th>Jenis Cuti</th>
-                                    <th>Tarikh Dicipta</th>
                                     <th>Tindakan</th>
                                 </tr>
                             </thead>
@@ -33,7 +32,6 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->gkcuti->kategori_cuti }}</td>
                                         <td>{{ $item->jenis_cuti }}</td>
-                                        <td>{{ $item->created_at->format('d-m-Y H:i') }}</td>
                                         <td>
                                             <a href="javascript:void(0)" onClick="viewFunc({{ $item->id }})" class="btn btn-primary btn-sm">Lihat</a>
                                             <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})" class="btn btn-success btn-sm">Kemaskini</a>
@@ -160,7 +158,7 @@
                     $('#gkcuti_id').val(res.gkcuti_id);
                     $('#jenis_cuti').val(res.jenis_cuti);
                     $('#gkcuti_id').attr('disabled', true);
-                    $('#jenis_cuti').attr('readonly', true);
+                    $('#jenis_cuti').attr('disabled', true);
                     $('#btn-save').hide();
                 }
             });

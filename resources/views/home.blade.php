@@ -15,25 +15,43 @@
                         @endif
 
                         {{ __('You are logged in!') }}
-                        <div>
-                            Kawalan Section
-                        </div>
-                        <div>
-                            Go to: <a href="/agama">Agama</a>
-                        </div>
-                        <div>
-                            Go to: <a href="/bangsa">Bangsa</a>
-                        </div>
-                        <div>
-                            Go to: <a href="/gelaran">Gelaran</a>
-                        </div>
-                        <div>
-                            Go to: <a href="/gkategori">Kumpulan Kategori</a>
-                        </div>
-                        <div>
-                            Go to: <a href="/gcuti">Jenis Cuti</a>
-                            Go to: <a href="/gkcuti">Jenis Kumpulan Cuti</a>
-                        </div>
+                        <div  class="padding:20px">&nbsp;</div>
+
+                        <table class="table">
+                            <thead></thead>
+                            <tbody>
+                                <tr class="table-active">
+                                    <th scope="row"></th>
+                                    <td colspan="2" class="table-active">Kawalan</td>
+                                    <td><a href="/agama">Agama</a></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"></th>
+                                   <td colspan="2"></td>
+                                    <td><a href="/bangsa">Bangsa</a></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"></th>
+                                    <td colspan="2"></td>
+                                    <td><a href="/gelaran">Gelaran</a></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"></th>
+                                    <td colspan="2"></td>
+                                    <td><a href="/gkategori">Kumpulan Kategori</a></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"></th>
+                                    <td colspan="2" class="table-active">Kawalan / Cuti</td>
+                                    <td><a href="/gcuti">Jenis Cuti</a></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"></th>
+                                    <td colspan="2"></td>
+                                    <td><a href="/gkcuti">Jenis Kumpulan Cuti</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

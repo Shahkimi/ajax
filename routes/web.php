@@ -70,11 +70,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/gkcuti/{id}', [GkcutiController::class, 'destroy'])->name('gkcuti.destroy');
     Route::get('/gkcuti/{id}', [GkcutiController::class, 'view'])->name('gkcuti.view');
 
+    // Route View Only
     Route::post('view-agama', [AgamaController::class, 'view']);
     Route::post('view-bangsa', [BangsaController::class, 'view']);
     Route::post('view-gelaran', [GelaranController::class, 'view']);
     Route::post('view-gkategori', [GkategoriController::class, 'view']);
     Route::post('view-gcuti', [GcutiController::class, 'view']);
+
+    Route::resource('', GkcutiController::class);
 });
 
 Auth::routes();
