@@ -3,12 +3,13 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AgamaController;
-use App\Http\Controllers\BangsaController;
-use App\Http\Controllers\GelaranController;
-use App\Http\Controllers\GkategoriController;
 use App\Http\Controllers\GcutiController;
+use App\Http\Controllers\BangsaController;
 use App\Http\Controllers\GkcutiController;
+use App\Http\Controllers\GelaranController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\GkategoriController;
+use App\Http\Controllers\KesalahanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,6 +79,8 @@ Route::middleware('auth')->group(function () {
     Route::post('view-gcuti', [GcutiController::class, 'view']);
 
     Route::resource('', GkcutiController::class);
+
+    Route::resource('', KesalahanController::class);
 });
 
 Auth::routes();
