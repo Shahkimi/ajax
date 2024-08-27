@@ -2,14 +2,17 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AgamaController;
-use App\Http\Controllers\GcutiController;
-use App\Http\Controllers\BangsaController;
-use App\Http\Controllers\GkcutiController;
-use App\Http\Controllers\GelaranController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\GkategoriController;
-use App\Http\Controllers\KesalahanController;
+use App\Http\Controllers\{
+    AgamaController,
+    BangsaController,
+    GelaranController,
+    GkategoriController,
+    GcutiController,
+    GkcutiController,
+    ProductController,
+    HomeController,
+    KesalahanController
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -26,63 +29,61 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Auth::routes();
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
 Route::middleware('auth')->group(function () {
     Route::resource('products', ProductController::class);
 
-    // Agama routes
-    Route::get('agama', [AgamaController::class, 'index']);
-    Route::post('store-agama', [AgamaController::class, 'store']);
-    Route::post('edit-agama', [AgamaController::class, 'edit']);
-    Route::post('delete-agama', [AgamaController::class, 'destroy']);
-    Route::post('view-agama', [AgamaController::class, 'view']);
+    Route::prefix('agama')->name('agama.')->group(function () {
+        Route::get('/', [AgamaController::class, 'index'])->name('index');
+        Route::post('store', [AgamaController::class, 'store'])->name('store');
+        Route::post('edit', [AgamaController::class, 'edit'])->name('edit');
+        Route::post('delete', [AgamaController::class, 'destroy'])->name('destroy');
+        Route::post('view', [AgamaController::class, 'view'])->name('view');
+    });
 
-    // Bangsa routes
-    Route::get('bangsa', [BangsaController::class, 'index']);
-    Route::post('store-bangsa', [BangsaController::class, 'store']);
-    Route::post('edit-bangsa', [BangsaController::class, 'edit']);
-    Route::post('delete-bangsa', [BangsaController::class, 'destroy']);
-    Route::post('view-bangsa', [BangsaController::class, 'view']);
+    Route::prefix('bangsa')->name('bangsa.')->group(function () {
+        Route::get('/', [BangsaController::class, 'index'])->name('index');
+        Route::post('store', [BangsaController::class, 'store'])->name('store');
+        Route::post('edit', [BangsaController::class, 'edit'])->name('edit');
+        Route::post('delete', [BangsaController::class, 'destroy'])->name('destroy');
+        Route::post('view', [BangsaController::class, 'view'])->name('view');
+    });
 
-    // Gelaran routes
-    Route::get('gelaran', [GelaranController::class, 'index']);
-    Route::post('store-gelaran', [GelaranController::class, 'store']);
-    Route::post('edit-gelaran', [GelaranController::class, 'edit']);
-    Route::post('delete-gelaran', [GelaranController::class, 'destroy']);
-    Route::post('view-gelaran', [GelaranController::class, 'view']);
+    Route::prefix('gelaran')->name('gelaran.')->group(function () {
+        Route::get('/', [GelaranController::class, 'index'])->name('index');
+        Route::post('store', [GelaranController::class, 'store'])->name('store');
+        Route::post('edit', [GelaranController::class, 'edit'])->name('edit');
+        Route::post('delete', [GelaranController::class, 'destroy'])->name('destroy');
+        Route::post('view', [GelaranController::class, 'view'])->name('view');
+    });
 
-    // Kumpulan Kategori routes
-    Route::get('gkategori', [GkategoriController::class, 'index']);
-    Route::post('store-gkategori', [GkategoriController::class, 'store']);
-    Route::post('edit-gkategori', [GkategoriController::class, 'edit']);
-    Route::post('delete-gkategori', [GkategoriController::class, 'destroy']);
-    Route::post('view-gkategori', [GkategoriController::class, 'view']);
+    Route::prefix('gkategori')->name('gkategori.')->group(function () {
+        Route::get('/', [GkategoriController::class, 'index'])->name('index');
+        Route::post('store', [GkategoriController::class, 'store'])->name('store');
+        Route::post('edit', [GkategoriController::class, 'edit'])->name('edit');
+        Route::post('delete', [GkategoriController::class, 'destroy'])->name('destroy');
+        Route::post('view', [GkategoriController::class, 'view'])->name('view');
+    });
 
-    // Kumpulan Cuti routes
-    Route::get('gcuti', [GcutiController::class, 'index']);
-    Route::post('store-gcuti', [GcutiController::class, 'store']);
-    Route::post('edit-gcuti', [GcutiController::class, 'edit']);
-    Route::post('delete-gcuti', [GcutiController::class, 'destroy']);
-    Route::post('view-gcuti', [GcutiController::class, 'view']);
+    Route::prefix('gcuti')->name('gcuti.')->group(function () {
+        Route::get('/', [GcutiController::class, 'index'])->name('index');
+        Route::post('store', [GcutiController::class, 'store'])->name('store');
+        Route::post('edit', [GcutiController::class, 'edit'])->name('edit');
+        Route::post('delete', [GcutiController::class, 'destroy'])->name('destroy');
+        Route::post('view', [GcutiController::class, 'view'])->name('view');
+    });
 
-    // Category Kumpulan Cuti routes
-    Route::get('/gkcuti', [GkcutiController::class, 'index'])->name('gkcuti.index');
-    Route::post('/gkcuti', [GkcutiController::class, 'store'])->name('gkcuti.store');
-    Route::get('/gkcuti/{id}/edit', [GkcutiController::class, 'edit'])->name('gkcuti.edit');
-    Route::delete('/gkcuti/{id}', [GkcutiController::class, 'destroy'])->name('gkcuti.destroy');
-    Route::get('/gkcuti/{id}', [GkcutiController::class, 'view'])->name('gkcuti.view');
+    Route::resource('gkcuti', GkcutiController::class);
 
-    // Route View Only
-    Route::post('view-agama', [AgamaController::class, 'view']);
-    Route::post('view-bangsa', [BangsaController::class, 'view']);
-    Route::post('view-gelaran', [GelaranController::class, 'view']);
-    Route::post('view-gkategori', [GkategoriController::class, 'view']);
-    Route::post('view-gcuti', [GcutiController::class, 'view']);
+    Route::prefix('kesalahan')->name('kesalahan.')->group(function () {
+        Route::get('/', [KesalahanController::class, 'index'])->name('index');
+        Route::post('store', [KesalahanController::class, 'store'])->name('store');
+        Route::post('edit', [KesalahanController::class, 'edit'])->name('edit');
+        Route::post('delete', [KesalahanController::class, 'destroy'])->name('destroy');
+        Route::post('view', [KesalahanController::class, 'view'])->name('view');
+    });
 
-    Route::resource('', GkcutiController::class);
-
-    Route::resource('', KesalahanController::class);
 });
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

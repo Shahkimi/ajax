@@ -22,7 +22,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Kod Kesalahan</th>
-                                    <th>Deskripsi Kesalahan</th>
+                                    <th>Deskripsi</th>
                                     <th>Tarikh Dicipta</th>
                                     <th>Tindakan</th>
                                 </tr>
@@ -56,7 +56,7 @@
     </div>
 
     <!-- Modal Tambah/Edit Kesalahan -->
-    <div class="modal fade" id="kesalahan-modal" tabindex="-1" aria-labelledby="kesalhanModalLabel" aria-hidden="true">
+    <div class="modal fade" id="kesalahan-modal" tabindex="-1" aria-labelledby="kesalahanModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -68,7 +68,7 @@
                         <input type="hidden" name="id" id="id">
                         <div class="mb-3">
                             <label for="kod_kesalahan" class="form-label">Kod Kesalahan</label>
-                            <input type="text" class="form-control" id="kod_kesalahan" name="kod_kesalahan" maxlength="50"
+                            <input type="text" class="form-control" id="kod_kesalahan" name="kod_kesalahan" maxlength="10"
                                 required>
                         </div>
                         <div class="mb-3">
@@ -108,7 +108,7 @@
         function editFunc(id) {
             $.ajax({
                 type: "POST",
-                url: "{{ url('edit-kesalahan') }}",
+                url: "{{ route('kesalahan.edit') }}",
                 data: {
                     id: id,
                     _token: '{{ csrf_token() }}'
@@ -132,7 +132,7 @@
             if (confirm("Delete record?")) {
                 $.ajax({
                     type: "POST",
-                    url: "{{ url('delete-kesalahan') }}",
+                    url: "{{ route('kesalahan.destroy') }}",
                     data: {
                         id: id,
                         _token: '{{ csrf_token() }}'
@@ -149,7 +149,7 @@
         function viewFunc(id) {
             $.ajax({
                 type: "POST",
-                url: "{{ url('view-kesalahan') }}",
+                url: "{{ route('kesalahan.view') }}",
                 data: {
                     id: id,
                     _token: '{{ csrf_token() }}'
@@ -159,7 +159,7 @@
                     $('#kesalahanModalLabel').html("Lihat Kesalahan");
                     $('#kesalahan-modal').modal('show');
                     $('#id').val(res.id);
-                    $('#kod_kesalahan').val(res.kod_kesalahan\);
+                    $('#kod_kesalahan').val(res.kod_kesalahan);
                     $('#desc_kesalahan').val(res.desc_kesalahan);
                     $('#kod_kesalahan').attr('readonly', true);
                     $('#desc_kesalahan').attr('readonly', true);
@@ -174,7 +174,7 @@
             formData.append('_token', '{{ csrf_token() }}');
             $.ajax({
                 type: 'POST',
-                url: "{{ url('store-kesalahan') }}",
+                url: "{{ route('kesalahan.store') }}",
                 data: formData,
                 cache: false,
                 contentType: false,
