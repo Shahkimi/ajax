@@ -11,7 +11,9 @@ use App\Http\Controllers\{
     GkcutiController,
     ProductController,
     HomeController,
-    KesalahanController
+    KesalahanController,
+    AktaController,
+    StatusController
 };
 
 /*
@@ -84,6 +86,22 @@ Route::middleware('auth')->group(function () {
         Route::post('edit', [KesalahanController::class, 'edit'])->name('edit');
         Route::post('delete', [KesalahanController::class, 'destroy'])->name('destroy');
         Route::post('view', [KesalahanController::class, 'view'])->name('view');
+    });
+
+    Route::prefix('akta')->name('akta.')->group(function () {
+        Route::get('/', [AktaController::class, 'index'])->name('index');
+        Route::post('store', [AktaController::class, 'store'])->name('store');
+        Route::post('edit', [AktaController::class, 'edit'])->name('edit');
+        Route::post('delete', [AktaController::class, 'destroy'])->name('destroy');
+        Route::post('view', [AktaController::class, 'view'])->name('view');
+    });
+
+    Route::prefix('status')->name('status.')->group(function () {
+        Route::get('/', [StatusController::class, 'index'])->name('index');
+        Route::post('store', [StatusController::class, 'store'])->name('store');
+        Route::post('edit', [StatusController::class, 'edit'])->name('edit');
+        Route::post('delete', [StatusController::class, 'destroy'])->name('destroy');
+        Route::post('view', [StatusController::class, 'view'])->name('view');
     });
 
 });
