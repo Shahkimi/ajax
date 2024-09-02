@@ -57,6 +57,16 @@
                                 </tr>
                                 <tr>
                                     <th scope="row"></th>
+                                    <td colspan="2"></td>
+                                    <td><a href="/hukuman">Hukuman</a></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"></th>
+                                    <td colspan="2"></td>
+                                    <td><a href="/panel">Panel</a></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"></th>
                                     <td colspan="2" class="table-active">Kawalan / Cuti</td>
                                     <td><a href="/gcuti">Jenis Cuti</a></td>
                                 </tr>

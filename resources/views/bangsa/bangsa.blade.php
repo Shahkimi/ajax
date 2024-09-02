@@ -108,7 +108,7 @@
         function editFunc(id) {
             $.ajax({
                 type: "POST",
-                url: "{{ url('edit-bangsa') }}",
+                url: "{{ route('bangsa.edit') }}",
                 data: {
                     id: id,
                     _token: '{{ csrf_token() }}'
@@ -132,7 +132,7 @@
             if (confirm("Delete record?")) {
                 $.ajax({
                     type: "POST",
-                    url: "{{ url('delete-bangsa') }}",
+                    url: "{{ route('bangsa.destroy') }}",
                     data: {
                         id: id,
                         _token: '{{ csrf_token() }}'
@@ -149,7 +149,7 @@
         function viewFunc(id) {
             $.ajax({
                 type: "POST",
-                url: "{{ url('view-bangsa') }}",
+                url: "{{ route('bangsa.view') }}",
                 data: {
                     id: id,
                     _token: '{{ csrf_token() }}'
@@ -174,7 +174,7 @@
             formData.append('_token', '{{ csrf_token() }}');
             $.ajax({
                 type: 'POST',
-                url: "{{ url('store-bangsa') }}",
+                url: "{{ route('bangsa.store') }}",
                 data: formData,
                 cache: false,
                 contentType: false,

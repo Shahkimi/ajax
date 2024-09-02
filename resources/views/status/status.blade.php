@@ -168,6 +168,7 @@
             });
         }
 
+        // Submit data
         $('#StatusForm').submit(function(e) {
             e.preventDefault();
             var formData = new FormData(this);

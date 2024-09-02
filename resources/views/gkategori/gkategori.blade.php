@@ -93,7 +93,7 @@
             }
         });
 
-        //Add Data
+        //Add Data gkategori
         function add() {
             $('#GkategoriForm').trigger("reset");
             $('#gkategoriModalLabel').html("Tambah Kategori");
@@ -104,11 +104,11 @@
             $('#btn-save').show();
         }
 
-        //Edit data
+        //Edit data gkategori
         function editFunc(id) {
             $.ajax({
                 type: "POST",
-                url: "{{ url('edit-gkategori') }}",
+                url: "{{ route('gkategori.edit') }}",
                 data: {
                     id: id,
                     _token: '{{ csrf_token() }}'
@@ -127,12 +127,12 @@
             });
         }
 
-        //Delete Data
+        //Delete data gkategori
         function deleteFunc(id) {
             if (confirm("Delete record?")) {
                 $.ajax({
                     type: "POST",
-                    url: "{{ url('delete-gkategori') }}",
+                    url: "{{ route('gkategori.destroy') }}",
                     data: {
                         id: id,
                         _token: '{{ csrf_token() }}'
@@ -145,11 +145,11 @@
             }
         }
 
-        //View Data
+        //View Data gkategori
         function viewFunc(id) {
             $.ajax({
                 type: "POST",
-                url: "{{ url('view-gkategori') }}",
+                url: "{{ route('gkategori.view') }}",
                 data: {
                     id: id,
                     _token: '{{ csrf_token() }}'
@@ -168,13 +168,14 @@
             });
         }
 
+        //Save Data gkategori
         $('#GkategoriForm').submit(function(e) {
             e.preventDefault();
             var formData = new FormData(this);
             formData.append('_token', '{{ csrf_token() }}');
             $.ajax({
                 type: 'POST',
-                url: "{{ url('store-gkategori') }}",
+                url: "{{ route('gkategori.store') }}",
                 data: formData,
                 cache: false,
                 contentType: false,

@@ -108,7 +108,7 @@
         function editFunc(id) {
             $.ajax({
                 type: "POST",
-                url: "{{ url('edit-gelaran') }}",
+                url: "{{ route('gelaran.edit') }}",
                 data: {
                     id: id,
                     _token: '{{ csrf_token() }}'
@@ -132,7 +132,7 @@
             if (confirm("Delete record?")) {
                 $.ajax({
                     type: "POST",
-                    url: "{{ url('delete-gelaran') }}",
+                    url: "{{ route('gelaran.destroy') }}",
                     data: {
                         id: id,
                         _token: '{{ csrf_token() }}'
@@ -149,7 +149,7 @@
         function viewFunc(id) {
             $.ajax({
                 type: "POST",
-                url: "{{ url('view-gelaran') }}",
+                url: "{{ route('gelaran.view') }}",
                 data: {
                     id: id,
                     _token: '{{ csrf_token() }}'
@@ -174,7 +174,7 @@
             formData.append('_token', '{{ csrf_token() }}');
             $.ajax({
                 type: 'POST',
-                url: "{{ url('store-gelaran') }}",
+                url: "{{ route('gelaran.store') }}",
                 data: formData,
                 cache: false,
                 contentType: false,

@@ -13,7 +13,9 @@ use App\Http\Controllers\{
     HomeController,
     KesalahanController,
     AktaController,
-    StatusController
+    StatusController,
+    hukumanController,
+    PanelController
 };
 
 /*
@@ -38,6 +40,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::middleware('auth')->group(function () {
     Route::resource('products', ProductController::class);
 
+    //Kawalan Section
     Route::prefix('agama')->name('agama.')->group(function () {
         Route::get('/', [AgamaController::class, 'index'])->name('index');
         Route::post('store', [AgamaController::class, 'store'])->name('store');
@@ -102,6 +105,22 @@ Route::middleware('auth')->group(function () {
         Route::post('edit', [StatusController::class, 'edit'])->name('edit');
         Route::post('delete', [StatusController::class, 'destroy'])->name('destroy');
         Route::post('view', [StatusController::class, 'view'])->name('view');
+    });
+
+    Route::prefix('hukuman')->name('hukuman.')->group(function () {
+        Route::get('/', [hukumanController::class, 'index'])->name('index');
+        Route::post('store', [hukumanController::class, 'store'])->name('store');
+        Route::post('edit', [hukumanController::class, 'edit'])->name('edit');
+        Route::post('delete', [hukumanController::class, 'destroy'])->name('destroy');
+        Route::post('view', [hukumanController::class, 'view'])->name('view');
+    });
+
+    Route::prefix('panel')->name('panel.')->group(function () {
+        Route::get('/', [PanelController::class, 'index'])->name('index');
+        Route::post('store', [PanelController::class, 'store'])->name('store');
+        Route::post('edit', [PanelController::class, 'edit'])->name('edit');
+        Route::post('delete', [PanelController::class, 'destroy'])->name('destroy');
+        Route::post('view', [PanelController::class, 'view'])->name('view');
     });
 
 });

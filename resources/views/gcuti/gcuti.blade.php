@@ -106,7 +106,7 @@
         function editFunc(id) {
             $.ajax({
                 type: "POST",
-                url: "{{ url('edit-gcuti') }}",
+                url: "{{ route('gcuti.edit') }}",
                 data: {
                     id: id,
                     _token: '{{ csrf_token() }}'
@@ -128,7 +128,7 @@
             if (confirm("Delete record?")) {
                 $.ajax({
                     type: "POST",
-                    url: "{{ url('delete-gcuti') }}",
+                    url: "{{ route('gcuti.destroy') }}",
                     data: {
                         id: id,
                         _token: '{{ csrf_token() }}'
@@ -145,7 +145,7 @@
         function viewFunc(id) {
             $.ajax({
                 type: "POST",
-                url: "{{ url('view-gcuti') }}",
+                url: "{{ route('gcuti.view') }}",
                 data: {
                     id: id,
                     _token: '{{ csrf_token() }}'
@@ -171,7 +171,7 @@
             formData.append('_token', '{{ csrf_token() }}');
             $.ajax({
                 type: 'POST',
-                url: "{{ url('store-gcuti') }}",
+                url: "{{ route('gcuti.store') }}",
                 data: formData,
                 cache: false,
                 contentType: false,
