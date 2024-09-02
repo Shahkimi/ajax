@@ -67,12 +67,7 @@ class PanelController extends Controller
         return response()->json($panel);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Request $request)
     {
         Panel::destroy($request->id);
