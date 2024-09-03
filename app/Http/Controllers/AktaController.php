@@ -8,23 +8,12 @@ use Illuminate\Http\Request;
 
 class AktaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $akta = Akta::paginate(10);
         return view('akta.akta', compact('akta'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -40,12 +29,6 @@ class AktaController extends Controller
         return response()->json($akta);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Request $request)
     {
         $akta = Akta::find($request->id);
@@ -53,12 +36,6 @@ class AktaController extends Controller
         return response()->json($akta);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request)
     {
         Akta::destroy($request->id);

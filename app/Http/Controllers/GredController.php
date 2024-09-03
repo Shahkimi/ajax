@@ -8,11 +8,22 @@ use Illuminate\Http\Request;
 
 class GredController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $gred = Gred::paginate(10);
+        $query = $request->input('search');
+
+        if ($request->ajax()) {
+            $gred = Gred::where('kod_gred', 'like', '%' . $query . '%')
+                ->orWhere('desc_gred', 'like', '%' . $query . '%')
+                ->paginate(25);
+
+            return view('gred.Partials.gred_data', compact('gred'))->render();
+        }
+
+        $gred = Gred::paginate(25);
         return view('gred.gred', compact('gred'));
     }
+
 
     public function store(Request $request)
     {

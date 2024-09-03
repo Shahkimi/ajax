@@ -131,4 +131,5 @@ Route::middleware('auth')->group(function () {
         Route::post('view', [GredController::class, 'view'])->name('view');
     });
 
+
 });

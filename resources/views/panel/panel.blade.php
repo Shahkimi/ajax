@@ -207,7 +207,7 @@
         });
         // Show the first step
         document.querySelector('.step-1').classList.remove('d-none');
-}
+        }
         // JavaScript to handle multi-step form navigation
         document.querySelectorAll('.next-step').forEach(button => {
             button.addEventListener('click', () => {
@@ -218,6 +218,7 @@
             });
         });
 
+        // JavaScript to handle multi-step form navigation
         document.querySelectorAll('.prev-step').forEach(button => {
             button.addEventListener('click', () => {
                 const currentStep = button.closest('.step');
