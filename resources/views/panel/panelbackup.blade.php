@@ -1,6 +1,60 @@
 @extends('layouts.app')
 
 @section('content')
+    <!--
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>Panel EPPSM</h2>
+                    <a class="btn btn-success" onClick="add()" href="javascript:void(0)">Tambah Panel</a>
+                </div>
+
+                @if ($message = Session::get('success'))
+                    <div class="alert alert-success">
+                        <p>{{ $message }}</p>
+                    </div>
+                @endif
+
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped" id="panel">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nama Pengerusi</th>
+                                    <th>No MPM Pengerusi</th>
+                                    <th>Tindakan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($panel as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->nama_pengurusi }}</td>
+                                        <td>{{ $item->mpm_pengurusi }}</td>
+                                        <td>
+                                            <a href="javascript:void(0)" onClick="viewFunc({{ $item->id }})"
+                                                class="btn btn-primary btn-sm">Lihat</a>
+                                            <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})"
+                                                class="btn btn-success btn-sm">Kemaskini</a>
+                                            <a href="javascript:void(0)" onClick="deleteFunc({{ $item->id }})"
+                                                class="btn btn-danger btn-sm">Hapus</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        {{-- <div class="d-flex justify-content-center"> --}}
+                        {!! $panel->links('pagination::bootstrap-5') !!}
+                        {{-- </div> --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    -->
+
     <!-- Panel Information -->
     <div class="container mt-4">
         <div class="row">
@@ -17,12 +71,14 @@
 
                 @foreach ($panel as $item)
                     <div class="card mx-auto" style="width: 40rem;">
-                        <div class="card-body text-end pb-1">
-                            <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})"
-                            class="btn btn-success">Kemaskini</a>
-                        </div>
-                        <div class="card-body pt-1">
+                        <div class="card-body">
                             <table class="table table-sm">
+                                <tr>
+                                    <td colspan="2" style="text-align:right;">
+                                        <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})"
+                                            class="btn btn-success btn-sm">Kemaskini</a>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td colspan="2" class="text-center">
                                         <div class="alert alert-info" role="alert">
@@ -31,11 +87,11 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Jawatan Panel</th>
+                                    <th>Jawatan Panel 2</th>
                                     <td>: {{ strtoupper($item->jawatan_panel2) }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Tajuk Panel</th>
+                                    <th>Tajuk Panel 2</th>
                                     <td>: {{ strtoupper($item->tajuk_panel2) }}</td>
                                 </tr>
                                 <tr>
@@ -46,11 +102,11 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Pengerusi</th>
+                                    <th>Nama Pengerusi</th>
                                     <td>: {{ strtoupper($item->nama_pengurusi) }}</td>
                                 </tr>
                                 <tr>
-                                    <th>No MPM </th>
+                                    <th>No MPM Pengerusi</th>
                                     <td>: {{ strtoupper($item->mpm_pengurusi) }}</td>
                                 </tr>
                                 <tr>
@@ -61,11 +117,11 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Panel 1</th>
+                                    <th>Nama Panel</th>
                                     <td>: {{ strtoupper($item->nama_panel) }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Panel 2</th>
+                                    <th>Nama Panel 2</th>
                                     <td>: {{ strtoupper($item->nama_panel2) }}</td>
                                 </tr>
                                 <tr>
@@ -138,11 +194,11 @@
                             <strong>Maklumat Pengerusi</strong>
                         </div>
                         <div class="mb-3">
-                            <label for="nama_pengurusi" class="form-label">Nama</label>
+                            <label for="nama_pengurusi" class="form-label">Nama Pengerusi</label>
                             <input type="text" class="form-control" id="nama_pengurusi" name="nama_pengurusi" maxlength="100" required>
                         </div>
                         <div class="mb-3">
-                            <label for="mpm_pengurusi" class="form-label">No MPM</label>
+                            <label for="mpm_pengurusi" class="form-label">No MPM Pengerusi</label>
                             <input type="text" class="form-control" id="mpm_pengurusi" name="mpm_pengurusi" maxlength="100" required>
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -289,6 +345,24 @@
                     $('#btn-save').show();
                 }
             });
+        }
+
+        //Delete Data
+        function deleteFunc(id) {
+            if (confirm("Delete record?")) {
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('panel.destroy') }}",
+                    data: {
+                        id: id,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    dataType: 'json',
+                    success: function(res) {
+                        window.location.reload();
+                    }
+                });
+            }
         }
 
         //View Data

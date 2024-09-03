@@ -8,23 +8,12 @@ use Illuminate\Http\Request;
 
 class PanelController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $panel = Panel::paginate(10);
         return view('panel.panel', compact('panel'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -54,25 +43,11 @@ class PanelController extends Controller
         return response()->json($panel);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Request $request)
     {
         $panel = Panel::find($request->id);
 
         return response()->json($panel);
-    }
-
-
-    public function destroy(Request $request)
-    {
-        Panel::destroy($request->id);
-
-        return response()->json(['success' => true]);
     }
 
     public function view(Request $request)

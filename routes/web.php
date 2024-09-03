@@ -14,8 +14,9 @@ use App\Http\Controllers\{
     KesalahanController,
     AktaController,
     StatusController,
-    hukumanController,
-    PanelController
+    HukumanController,
+    PanelController,
+    GredController
 };
 
 /*
@@ -119,8 +120,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [PanelController::class, 'index'])->name('index');
         Route::post('store', [PanelController::class, 'store'])->name('store');
         Route::post('edit', [PanelController::class, 'edit'])->name('edit');
-        Route::post('delete', [PanelController::class, 'destroy'])->name('destroy');
         Route::post('view', [PanelController::class, 'view'])->name('view');
+    });
+
+    Route::prefix('gred')->name('gred.')->group(function () {
+        Route::get('/', [GredController::class, 'index'])->name('index');
+        Route::post('store', [GredController::class, 'store'])->name('store');
+        Route::post('edit', [GredController::class, 'edit'])->name('edit');
+        Route::post('delete', [GredController::class, 'destroy'])->name('destroy');
+        Route::post('view', [GredController::class, 'view'])->name('view');
     });
 
 });

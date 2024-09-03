@@ -67,6 +67,11 @@
                                 </tr>
                                 <tr>
                                     <th scope="row"></th>
+                                    <td colspan="2"></td>
+                                    <td><a href="/gred">Gred</a></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"></th>
                                     <td colspan="2" class="table-active">Kawalan / Cuti</td>
                                     <td><a href="/gcuti">Jenis Cuti</a></td>
                                 </tr>

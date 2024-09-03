@@ -8,23 +8,12 @@ use Illuminate\Http\Request;
 
 class hukumanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $hukuman = Hukuman::paginate(10);
         return view('hukuman.hukuman', compact('hukuman'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -40,12 +29,6 @@ class hukumanController extends Controller
         return response()->json($hukuman);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Request $request)
     {
         $hukuman = Hukuman::find($request->id);
@@ -53,12 +36,6 @@ class hukumanController extends Controller
         return response()->json($hukuman);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request)
     {
         Hukuman::destroy($request->id);
