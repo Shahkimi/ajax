@@ -51,17 +51,15 @@ class GredController extends Controller
         return response()->json($gred);
     }
 
-     public function search(Request $request)
+    public function search(Request $request)
     {
-
         $search = $request->search;
 
         $gred = Gred::where(function ($query) use ($search) {
-
             $query->where('kod_gred', 'like', "%$search%")
             ->orWhere('desc_gred', 'like', "%$search%");
         })->get();
 
-        return view('gred.gred', compact('gred', 'search'));
+        return response()->json(['data' => $gred]);
     }
 }

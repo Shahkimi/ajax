@@ -5,8 +5,8 @@
         <div class="row justify-content-center">
             <div class="col-lg-12"> <!-- Increased the width of the card -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2>Gred</h2>
-                    <a class="btn btn-success" onClick="add()" href="javascript:void(0)">Tambah Gred</a>
+                    <h2>Jawatan</h2>
+                    <a class="btn btn-success" onClick="add()" href="javascript:void(0)">Tambah Jawatan</a>
                 </div>
 
                 @if ($message = Session::get('success'))
@@ -27,21 +27,21 @@
                             </form>
                         </div>
 
-                        <table class="table table-bordered table-striped" id="gred">
+                        <table class="table table-bordered table-striped" id="jawatan">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Gred</th>
-                                    <th>Deskripsi Gred</th>
+                                    <th>Jawatan</th>
+                                    <th>Deskripsi Jawatan</th>
                                     <th>Tindakan</th>
                                 </tr>
                             </thead>
-                            <tbody id="gredTableBody">
-                                @foreach ($gred as $item)
+                            <tbody id="jawatanTableBody">
+                                @foreach ($jawatan as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ strtoupper($item->kod_gred) }}</td>
-                                        <td>{{ strtoupper($item->desc_gred) }}</td>
+                                        <td>{{ strtoupper($item->kod_jawatan) }}</td>
+                                        <td>{{ strtoupper($item->desc_jawatan) }}</td>
                                         <td>
                                             <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})"
                                                 class="btn btn-success btn-sm">Kemaskini</a>
@@ -52,7 +52,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        {!! $gred->links('pagination::bootstrap-5') !!}
+                        {!! $jawatan->links('pagination::bootstrap-5') !!}
                     </div>
                 </div>
             </div>
@@ -61,32 +61,32 @@
 
 
 
-    <!-- Modal Tambah/Edit Gred -->
-    <div class="modal fade" id="gred-modal" tabindex="-1" aria-labelledby="gredModalLabel" aria-hidden="true">
+    <!-- Modal Tambah/Edit Jawatan -->
+    <div class="modal fade" id="jawatan-modal" tabindex="-1" aria-labelledby="jawatanModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="gredModalLabel"></h5>
+                    <h5 class="modal-title" id="jawatanModalLabel"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="GredForm" name="GredForm">
+                    <form id="JawatanForm" name="JawatanForm">
                         <input type="hidden" name="id" id="id">
                         <div class="mb-3">
-                            <label for="kod_gred" class="form-label">Gred</label>
-                            <input type="text" class="form-control" id="kod_gred" name="kod_gred" maxlength="50"
+                            <label for="kod_jawatan" class="form-label">Jawatan</label>
+                            <input type="text" class="form-control" id="kod_jawatan" name="kod_jawatan" maxlength="50"
                                 required>
                         </div>
                         <div class="mb-3">
-                            <label for="desc_gred" class="form-label">Deskripsi Gred</label>
-                            <input type="text" class="form-control" id="desc_gred" name="desc_gred" maxlength="100"
+                            <label for="desc_jawatan" class="form-label">Deskripsi Jawatan</label>
+                            <input type="text" class="form-control" id="desc_jawatan" name="desc_jawatan" maxlength="100"
                                 required>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary" id="btn-save" form="GredForm">Simpan</button>
+                    <button type="submit" class="btn btn-primary" id="btn-save" form="JawatanForm">Simpan</button>
                 </div>
             </div>
         </div>
@@ -107,7 +107,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: '{{ route('gred.search') }}',
+                url: '{{ route('jawatan.search') }}',
                 data: {search: searchQuery},
                 success: function(response) {
                     let rows = '';
@@ -115,8 +115,8 @@
                         rows += `
                             <tr>
                                 <td>${index + 1}</td>
-                                <td>${item.kod_gred}</td>
-                                <td>${item.desc_gred}</td>
+                                <td>${item.kod_jawatan}</td>
+                                <td>${item.desc_jawatan}</td>
                                 <td>
                                     <a href="javascript:void(0)" onClick="editFunc(${item.id})"
                                         class="btn btn-success btn-sm">Kemaskini</a>
@@ -125,19 +125,19 @@
                                 </td>
                             </tr>`;
                     });
-                    $('#gredTableBody').html(rows);
+                    $('#jawatanTableBody').html(rows);
                 }
             });
         });
 
         //Add Data
         function add() {
-            $('#GredForm').trigger("reset");
-            $('#gredModalLabel').html("Tambah Gred");
-            $('#gred-modal').modal('show');
+            $('#JawatanForm').trigger("reset");
+            $('#jawatanModalLabel').html("Tambah Jawatan");
+            $('#jawatan-modal').modal('show');
             $('#id').val('');
-            $('#kod_gred').attr('readonly', false);
-            $('#desc_gred').attr('readonly', false);
+            $('#kod_jawatan').attr('readonly', false);
+            $('#desc_jawatan').attr('readonly', false);
             $('#btn-save').show();
         }
 
@@ -145,20 +145,20 @@
         function editFunc(id) {
             $.ajax({
                 type: "POST",
-                url: "{{ route('gred.edit') }}",
+                url: "{{ route('jawatan.edit') }}",
                 data: {
                     id: id,
                     _token: '{{ csrf_token() }}'
                 },
                 dataType: 'json',
                 success: function(res) {
-                    $('#gredModalLabel').html("Edit Gred");
-                    $('#gred-modal').modal('show');
+                    $('#jawatanModalLabel').html("Edit Jawatan");
+                    $('#jawatan-modal').modal('show');
                     $('#id').val(res.id);
-                    $('#kod_gred').val(res.kod_gred);
-                    $('#desc_gred').val(res.desc_gred);
-                    $('#kod_gred').attr('readonly', false);
-                    $('#desc_gred').attr('readonly', false);
+                    $('#kod_jawatan').val(res.kod_jawatan);
+                    $('#desc_jawatan').val(res.desc_jawatan);
+                    $('#kod_jawatan').attr('readonly', false);
+                    $('#desc_jawatan').attr('readonly', false);
                     $('#btn-save').show();
                 }
             });
@@ -169,7 +169,7 @@
             if (confirm("Delete record?")) {
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('gred.destroy') }}",
+                    url: "{{ route('jawatan.destroy') }}",
                     data: {
                         id: id,
                         _token: '{{ csrf_token() }}'
@@ -182,19 +182,19 @@
             }
         }
 
-        $('#GredForm').submit(function(e) {
+        $('#JawatanForm').submit(function(e) {
             e.preventDefault();
             var formData = new FormData(this);
             formData.append('_token', '{{ csrf_token() }}');
             $.ajax({
                 type: 'POST',
-                url: "{{ route('gred.store') }}",
+                url: "{{ route('jawatan.store') }}",
                 data: formData,
                 cache: false,
                 contentType: false,
                 processData: false,
                 success: function(data) {
-                    $("#gred-modal").modal('hide');
+                    $("#jawatan-modal").modal('hide');
                     window.location.reload();
                 },
                 error: function(data) {
