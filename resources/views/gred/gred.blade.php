@@ -15,94 +15,96 @@
                     </div>
                 @endif
 
-                <!-- Search Input -->
-                <div class="mb-3">
-                    <input type="text" id="search" class="form-control" placeholder="Cari Gred">
-                </div>
-
                 <div class="card">
                     <div class="card-body">
                         <table class="table table-bordered table-striped" id="gred">
+                            <div class="col-md-6">
+                <div class="form-group">
+                    <form method="get" action="/search">
+                        <div class="input-group">
+                            <input class="form-control" name="search" placeholder="Search..." value="{{ isset($search) ? $search : ''}}">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
                             <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>Gred</th>
                                     <th>Deskripsi Gred</th>
+                                    <th>Tarikh Dicipta</th>
                                     <th>Tindakan</th>
                                 </tr>
                             </thead>
-                            <tbody id="gred-data">
-                                @include('gred.Partials.gred_data', ['gred' => $gred])
+                            <tbody>
+                                @foreach ($gred as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->kod_gred }}</td>
+                                        <td>{{ $item->desc_gred }}</td>
+                                        <td>{{ $item->created_at->format('d-m-Y H:i') }}</td>
+                                        <td>
+                                            <a href="javascript:void(0)" onClick="viewFunc({{ $item->id }})"
+                                                class="btn btn-primary btn-sm">Lihat</a>
+                                            <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})"
+                                                class="btn btn-success btn-sm">Kemaskini</a>
+                                            <a href="javascript:void(0)" onClick="deleteFunc({{ $item->id }})"
+                                                class="btn btn-danger btn-sm">Hapus</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
+                        {{-- <div class="d-flex justify-content-center"> --}}
                         {!! $gred->links('pagination::bootstrap-5') !!}
+                        {{-- </div> --}}
                     </div>
                 </div>
             </div>
         </div>
     </div>
-@endsection
 
-<!-- Modal Tambah/Edit Gred -->
-<div class="modal fade" id="gred-modal" tabindex="-1" aria-labelledby="gredModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="gredModalLabel"></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="GredForm" name="GredForm">
-                    <input type="hidden" name="id" id="id">
-                    <div class="mb-3">
-                        <label for="kod_gred" class="form-label">Kod Gred</label>
-                        <input type="text" class="form-control" id="kod_gred" name="kod_gred" maxlength="10" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="desc_gred" class="form-label">Deskripsi Gred</label>
-                        <input type="text" class="form-control" id="desc_gred" name="desc_gred" maxlength="100" required>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                <button type="submit" class="btn btn-primary" id="btn-save" form="GredForm">Simpan</button>
+    <!-- Modal Tambah/Edit Gred -->
+    <div class="modal fade" id="gred-modal" tabindex="-1" aria-labelledby="gredModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="gredModalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="GredForm" name="GredForm">
+                        <input type="hidden" name="id" id="id">
+                        <div class="mb-3">
+                            <label for="kod_gred" class="form-label">Gred</label>
+                            <input type="text" class="form-control" id="kod_gred" name="kod_gred" maxlength="50"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="desc_gred" class="form-label">Deskripsi Gred</label>
+                            <input type="text" class="form-control" id="desc_gred" name="desc_gred" maxlength="100"
+                                required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary" id="btn-save" form="GredForm">Simpan</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-@section('scripts')
     <script type="text/javascript">
-        $(document).ready(function() {
-            function fetchGred(query = '') {
-                $.ajax({
-                    url: "{{ route('gred.index') }}",
-                    type: "GET",
-                    data: { 'search': query },
-                    success: function(data) {
-                        $('#gred-data').html(data);
-                    }
-                });
-            }
-
-            // Initially load data
-            fetchGred();
-
-            // Live search
-            $('#search').on('keyup', function() {
-                let query = $(this).val();
-                fetchGred(query);
-            });
-        });
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
 
-        // Define the add function
+        //Add Data
         function add() {
             $('#GredForm').trigger("reset");
             $('#gredModalLabel').html("Tambah Gred");
@@ -113,11 +115,15 @@
             $('#btn-save').show();
         }
 
+        //Edit data
         function editFunc(id) {
             $.ajax({
                 type: "POST",
                 url: "{{ route('gred.edit') }}",
-                data: { id: id, _token: '{{ csrf_token() }}' },
+                data: {
+                    id: id,
+                    _token: '{{ csrf_token() }}'
+                },
                 dataType: 'json',
                 success: function(res) {
                     $('#gredModalLabel').html("Edit Gred");
@@ -132,12 +138,16 @@
             });
         }
 
+        //Delete Data
         function deleteFunc(id) {
             if (confirm("Delete record?")) {
                 $.ajax({
                     type: "POST",
                     url: "{{ route('gred.destroy') }}",
-                    data: { id: id, _token: '{{ csrf_token() }}' },
+                    data: {
+                        id: id,
+                        _token: '{{ csrf_token() }}'
+                    },
                     dataType: 'json',
                     success: function(res) {
                         window.location.reload();
@@ -146,11 +156,15 @@
             }
         }
 
+        //View Data
         function viewFunc(id) {
             $.ajax({
                 type: "POST",
                 url: "{{ route('gred.view') }}",
-                data: { id: id, _token: '{{ csrf_token() }}' },
+                data: {
+                    id: id,
+                    _token: '{{ csrf_token() }}'
+                },
                 dataType: 'json',
                 success: function(res) {
                     $('#gredModalLabel').html("Lihat Gred");
@@ -187,4 +201,3 @@
         });
     </script>
 @endsection
-

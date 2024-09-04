@@ -12,18 +12,9 @@ class GredController extends Controller
     {
         $query = $request->input('search');
 
-        if ($request->ajax()) {
-            $gred = Gred::where('kod_gred', 'like', '%' . $query . '%')
-                ->orWhere('desc_gred', 'like', '%' . $query . '%')
-                ->paginate(25);
-
-            return view('gred.Partials.gred_data', compact('gred'))->render();
-        }
-
-        $gred = Gred::paginate(25);
+        $gred = Gred::paginate(10);
         return view('gred.gred', compact('gred'));
     }
-
 
     public function store(Request $request)
     {
@@ -58,5 +49,19 @@ class GredController extends Controller
     {
         $gred = Gred::find($request->id);
         return response()->json($gred);
+    }
+
+     public function search(Request $request)
+    {
+
+        $search = $request->search;
+
+        $gred = Gred::where(function ($query) use ($search) {
+
+            $query->where('kod_gred', 'like', "%$search%")
+            ->orWhere('desc_gred', 'like', "%$search%");
+        })->get();
+
+        return view('gred.gred', compact('gred', 'search'));
     }
 }

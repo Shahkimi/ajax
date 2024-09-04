@@ -125,6 +125,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('gred')->name('gred.')->group(function () {
         Route::get('/', [GredController::class, 'index'])->name('index');
+        Route::post('search', [GredController::class, 'search'])->name('search');
         Route::post('store', [GredController::class, 'store'])->name('store');
         Route::post('edit', [GredController::class, 'edit'])->name('edit');
         Route::post('delete', [GredController::class, 'destroy'])->name('destroy');
