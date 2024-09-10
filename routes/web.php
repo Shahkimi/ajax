@@ -17,7 +17,8 @@ use App\Http\Controllers\{
     HukumanController,
     PanelController,
     GredController,
-    JawatanController
+    JawatanController,
+    PtjController
 };
 
 /*
@@ -138,6 +139,15 @@ Route::middleware('auth')->group(function () {
         Route::post('store', [JawatanController::class, 'store'])->name('store');
         Route::post('edit', [JawatanController::class, 'edit'])->name('edit');
         Route::post('delete', [JawatanController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('ptj')->name('ptj.')->group(function () {
+        Route::get('/', [PtjController::class, 'index'])->name('index');
+        Route::post('search', [PtjController::class, 'search'])->name('search');
+        Route::post('store', [PtjController::class, 'store'])->name('store');
+        Route::post('edit', [PtjController::class, 'edit'])->name('edit');
+        Route::post('delete', [PtjController::class, 'destroy'])->name('destroy');
+        Route::post('view', [PtjController::class, 'view'])->name('view');
     });
 
 });
