@@ -20,7 +20,7 @@
                         <table class="table table-bordered table-striped" id="kesalahan">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>No</th>
                                     <th>Kod Kesalahan</th>
                                     <th>Deskripsi</th>
                                     <th>Tarikh Dicipta</th>
