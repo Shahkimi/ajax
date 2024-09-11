@@ -43,3 +43,4 @@ php artisan optimize
 
 # Serve
 php artisan serve
+https://nit-administrative-systems.github.io/dynamic-forms/install.html#post-installation-tasks
