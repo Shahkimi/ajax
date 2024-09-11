@@ -30,7 +30,7 @@
                         <table class="table table-bordered table-striped" id="ptj">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>No</th>
                                     <th>NO PTJ</th>
                                     <th>Nama PTJ</th>
                                     <th>Tindakan</th>
