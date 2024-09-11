@@ -26,7 +26,7 @@ Route::get('/home', [Controllers\HomeController::class, 'index'])->name('home');
 Route::middleware('auth')->group(function () {
     Route::resource('products', Controllers\ProductController::class);
 
-    //Controller Section
+    //Kawalan Section
     Route::prefix('agama')->name('agama.')->group(function () {
         Route::get('/', [Controllers\AgamaController::class, 'index'])->name('index');
         Route::post('store', [Controllers\AgamaController::class, 'store'])->name('store');

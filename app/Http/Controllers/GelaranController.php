@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Datatables;
 use App\Models\Gelaran;
+use App\Http\Requests\GelaranRequest;
 use Illuminate\Http\Request;
 
 class GelaranController extends Controller
@@ -15,27 +15,22 @@ class GelaranController extends Controller
      */
     public function index()
     {
-        $gelaran = Gelaran::paginate(10);
+        $gelaran = Gelaran::latest()->paginate(10);
         return view('gelaran.gelaran', compact('gelaran'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\GelaranRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(GelaranRequest $request)
     {
-        $validatedData = $request->validate([
-            'nama_gelaran' => 'required',
-            'desc_gelaran' => 'required'
-        ], [], [
-            'nama_gelaran' => 'nama gelaran',
-            'desc_gelaran' => 'deskripsi gelaran'
-        ]);
-
-        $gelaran = Gelaran::updateOrCreate(['id' => $request->id], $validatedData);
+        $gelaran = Gelaran::updateOrCreate(
+            ['id' => $request->id],
+            $request->validated()
+        );
 
         return response()->json($gelaran);
     }
@@ -43,32 +38,36 @@ class GelaranController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request)
     {
-        $gelaran = Gelaran::find($request->id);
-
+        $gelaran = Gelaran::findOrFail($request->id);
         return response()->json($gelaran);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
     {
         Gelaran::destroy($request->id);
-
         return response()->json(['success' => true]);
     }
 
+    /**
+     * View the specified resource.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function view(Request $request)
     {
-        $gelaran = Gelaran::find($request->id);
+        $gelaran = Gelaran::findOrFail($request->id);
         return response()->json($gelaran);
     }
 }
