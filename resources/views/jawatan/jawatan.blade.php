@@ -30,7 +30,7 @@
                         <table class="table table-bordered table-striped" id="jawatan">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>No</th>
                                     <th>Jawatan</th>
                                     <th>Deskripsi Jawatan</th>
                                     <th>Tindakan</th>
