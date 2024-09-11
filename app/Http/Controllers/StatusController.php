@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Datatables;
 use App\Models\Status;
+use App\Http\Requests\StatusRequest;
 use Illuminate\Http\Request;
 
 class StatusController extends Controller
@@ -15,27 +15,22 @@ class StatusController extends Controller
      */
     public function index()
     {
-        $status = Status::paginate(10);
+        $status = Status::latest()->paginate(10);
         return view('status.status', compact('status'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\StatusRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StatusRequest $request)
     {
-        $validatedData = $request->validate([
-            'kod_status' => 'required',
-            'desc_status' => 'required'
-        ], [], [
-            'kod_status' => 'Status',
-            'desc_status' => 'Deskripsi Status'
-        ]);
-
-        $status = Status::updateOrCreate(['id' => $request->id], $validatedData);
+        $status = Status::updateOrCreate(
+            ['id' => $request->id],
+            $request->validated()
+        );
 
         return response()->json($status);
     }
@@ -43,19 +38,19 @@ class StatusController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request)
     {
-        $status = Status::find($request->id);
+        $status = Status::findOrFail($request->id);
         return response()->json($status);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
@@ -64,9 +59,15 @@ class StatusController extends Controller
         return response()->json(['success' => true]);
     }
 
+    /**
+     * View the specified resource.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function view(Request $request)
     {
-        $status = Status::find($request->id);
+        $status = Status::findOrFail($request->id);
         return response()->json($status);
     }
 }
