@@ -70,11 +70,13 @@
                             <label for="nama_agama" class="form-label">Nama Agama</label>
                             <input type="text" class="form-control" id="nama_agama" name="nama_agama" maxlength="50"
                                 required>
+                            <div class="invalid-feedback" id="nama_agama_error"></div>
                         </div>
                         <div class="mb-3">
                             <label for="desc_agama" class="form-label">Deskripsi</label>
                             <input type="text" class="form-control" id="desc_agama" name="desc_agama" maxlength="100"
                                 required>
+                            <div class="invalid-feedback" id="desc_agama_error"></div>
                         </div>
                     </form>
                 </div>
@@ -93,7 +95,6 @@
             }
         });
 
-        //Add Data
         function add() {
             $('#AgamaForm').trigger("reset");
             $('#agamaModalLabel').html("Tambah Agama");
@@ -102,9 +103,9 @@
             $('#nama_agama').attr('readonly', false);
             $('#desc_agama').attr('readonly', false);
             $('#btn-save').show();
+            clearErrors();
         }
 
-        //Edit data
         function editFunc(id) {
             $.ajax({
                 type: "POST",
@@ -123,11 +124,11 @@
                     $('#nama_agama').attr('readonly', false);
                     $('#desc_agama').attr('readonly', false);
                     $('#btn-save').show();
+                    clearErrors();
                 }
             });
         }
 
-        //Delete Data
         function deleteFunc(id) {
             if (confirm("Delete record?")) {
                 $.ajax({
@@ -145,7 +146,6 @@
             }
         }
 
-        //View Data
         function viewFunc(id) {
             $.ajax({
                 type: "POST",
@@ -164,6 +164,7 @@
                     $('#nama_agama').attr('readonly', true);
                     $('#desc_agama').attr('readonly', true);
                     $('#btn-save').hide();
+                    clearErrors();
                 }
             });
         }
@@ -183,10 +184,34 @@
                     $("#agama-modal").modal('hide');
                     window.location.reload();
                 },
-                error: function(data) {
-                    console.log(data);
+                error: function(xhr) {
+                    if (xhr.status === 422) {
+                        var errors = xhr.responseJSON.errors;
+                        displayErrors(errors);
+                    } else {
+                        console.log(xhr);
+                    }
                 }
             });
+        });
+
+        function displayErrors(errors) {
+            clearErrors();
+            $.each(errors, function(field, messages) {
+                var inputElement = $('#' + field);
+                inputElement.addClass('is-invalid');
+                var errorElement = $('#' + field + '_error');
+                errorElement.html(messages.join('<br>')).show();
+            });
+        }
+
+        function clearErrors() {
+            $('.is-invalid').removeClass('is-invalid');
+            $('.invalid-feedback').html('').hide();
+        }
+
+        $('#agama-modal').on('hidden.bs.modal', function() {
+            clearErrors();
         });
     </script>
 @endsection

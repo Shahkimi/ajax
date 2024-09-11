@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AgamaRequest;
 use Datatables;
 use App\Models\Agama;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class AgamaController extends Controller
      */
     public function index()
     {
-        $agama = Agama::paginate(10);
+        $agama = Agama::latest()->paginate(10);
         return view('agama.agama', compact('agama'));
     }
 
@@ -25,17 +26,12 @@ class AgamaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AgamaRequest $request)
     {
-        $validatedData = $request->validate([
-            'nama_agama' => 'required',
-            'desc_agama' => 'required'
-        ], [], [
-            'nama_agama' => 'nama agama',
-            'desc_agama' => 'deskripsi agama'
-        ]);
-
-        $agama = Agama::updateOrCreate(['id' => $request->id], $validatedData);
+        $agama = Agama::updateOrCreate(
+            ['id' => $request->id],
+            $request->validated()
+        );
 
         return response()->json($agama);
     }
@@ -48,8 +44,7 @@ class AgamaController extends Controller
      */
     public function edit(Request $request)
     {
-        $agama = Agama::find($request->id);
-
+        $agama = Agama::findOrFail($request->id);
         return response()->json($agama);
     }
 
@@ -62,14 +57,12 @@ class AgamaController extends Controller
     public function destroy(Request $request)
     {
         Agama::destroy($request->id);
-
         return response()->json(['success' => true]);
     }
 
     public function view(Request $request)
     {
-        $agama = Agama::find($request->id);
+        $agama = Agama::findOrFail($request->id);
         return response()->json($agama);
     }
-
 }
