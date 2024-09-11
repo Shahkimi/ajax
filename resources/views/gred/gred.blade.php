@@ -30,7 +30,7 @@
                         <table class="table table-bordered table-striped" id="gred">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>No</th>
                                     <th>Gred</th>
                                     <th>Deskripsi Gred</th>
                                     <th>Tindakan</th>
