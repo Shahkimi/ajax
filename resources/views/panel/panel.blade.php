@@ -96,9 +96,6 @@
                         </div>
                     </div>
                 @endforeach
-                {{-- <div class="d-flex justify-content-center"> --}}
-                {!! $panel->links('pagination::bootstrap-5') !!}
-                {{-- </div> --}}
             </div>
         </div>
     </div>
