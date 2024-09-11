@@ -20,7 +20,7 @@
                         <table class="table table-bordered table-striped" id="akta">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>No</th>
                                     <th>Akta</th>
                                     <th>Deskripsi</th>
                                     <th>Tarikh Dicipta</th>
