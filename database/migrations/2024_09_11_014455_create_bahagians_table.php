@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('bahagians', function (Blueprint $table) {
-            $table->string('kod_bahagian', 10)->primary();
-            $table->string('kod_ptj', 10);
-            $table->foreign('kod_ptj')->references('kod_ptj')->on('ptjs')->onDelete('cascade');
+            $table->id();
+            $table->foreignId('ptj_id')->constrained('ptjs')->onDelete('cascade');
+            $table->string('desc_bahagian');
             $table->timestamps();
         });
     }

@@ -72,15 +72,19 @@
                 <div class="modal-body">
                     <form id="PtjForm" name="PtjForm">
                         <input type="hidden" name="id" id="id">
-                        <div class="mb-3">
-                            <label for="kod_ptj" class="form-label">No Ptj</label>
-                            <input type="text" class="form-control" id="kod_ptj" name="kod_ptj" maxlength="50"
-                                required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="desc_ptj" class="form-label">Nama Ptj</label>
-                            <input type="text" class="form-control" id="desc_ptj" name="desc_ptj" maxlength="100"
-                                required>
+                        <div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="kod_ptj" class="form-label">No Ptj</label>
+                                    <input type="text" class="form-control" id="kod_ptj" name="kod_ptj" maxlength="50"
+                                        required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="desc_ptj" class="form-label">Nama Ptj</label>
+                                    <input type="text" class="form-control" id="desc_ptj" name="desc_ptj" maxlength="100"
+                                        required>
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="ketua_ptj" class="form-label">Ketua Ptj</label>

@@ -7,14 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Unit extends Model
 {
-    protected $primaryKey = 'kod_unit';
-    public $incrementing = false;
-    protected $keyType = 'string';
-
-    protected $fillable = ['kod_unit', 'kod_bahagian'];
+    protected $fillable = [
+        'bahagian_id',
+        'desc_unit',
+    ];
 
     public function bahagian()
     {
-        return $this->belongsTo(Bahagian::class, 'kod_bahagian', 'kod_bahagian');
+        return $this->belongsTo(Bahagian::class);
     }
 }

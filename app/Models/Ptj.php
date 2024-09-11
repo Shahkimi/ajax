@@ -15,4 +15,9 @@ class Ptj extends Model
         'ketua_ptj',
         'alamat_ptj',
     ];
+
+    public function bahagians()
+    {
+        return $this->hasMany(Bahagian::class);
+    }
 }

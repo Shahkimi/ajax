@@ -14,10 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('units', function (Blueprint $table) {
-            $table->string('kod_unit', 10)->primary();
-            $table->string('kod_bahagian', 10);
-            $table->foreign('kod_bahagian')->references('kod_bahagian')->on('bahagians')->onDelete('cascade');
-            $table->timestamps();
+            $table->id();
+            $table->foreignId('bahagian_id')->constrained('bahagians')->onDelete('cascade');
+            $table->string('desc_unit');
             $table->timestamps();
         });
     }

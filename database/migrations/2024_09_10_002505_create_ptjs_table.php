@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('ptjs', function (Blueprint $table) {
             $table->id();
-            $table->string('kod_ptj');
+            $table->string('kod_ptj')->unique();
             $table->string('desc_ptj');
             $table->string('ketua_ptj');
-            $table->string('alamat_ptj');
+            $table->text('alamat_ptj');
             $table->timestamps();
         });
     }
