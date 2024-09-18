@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container d-flex justify-content-center">
-        <div class="row justify-content-center">
-            <div class="col-lg-12"> <!-- Increased the width of the card -->
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 mx-auto"> <!-- Center the card in the middle of the page -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2>PTJ</h2>
                     <a class="btn btn-success" onClick="add()" href="javascript:void(0)">Tambah PTJ</a>
@@ -43,6 +43,8 @@
                                         <td>{{ strtoupper($item->kod_ptj) }}</td>
                                         <td>{{ strtoupper($item->desc_ptj) }}</td>
                                         <td>
+                                            <a href="javascript:void(0)" onClick="viewFunc({{ $item->id }})"
+                                                class="btn btn-primary btn-sm">Lihat</a>
                                             <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})"
                                                 class="btn btn-success btn-sm">Kemaskini</a>
                                             <a href="javascript:void(0)" onClick="deleteFunc({{ $item->id }})"
@@ -58,6 +60,7 @@
             </div>
         </div>
     </div>
+
 
 
 
@@ -81,8 +84,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="desc_ptj" class="form-label">Nama Ptj</label>
-                                    <input type="text" class="form-control" id="desc_ptj" name="desc_ptj" maxlength="100"
-                                        required>
+                                    <input type="text" class="form-control" id="desc_ptj" name="desc_ptj"
+                                        maxlength="100" required>
                                 </div>
                             </div>
                         </div>
@@ -122,7 +125,9 @@
             $.ajax({
                 type: 'POST',
                 url: '{{ route('ptj.search') }}',
-                data: {search: searchQuery},
+                data: {
+                    search: searchQuery
+                },
                 success: function(response) {
                     let rows = '';
                     response.data.forEach(function(item, index) {
@@ -200,6 +205,33 @@
                     }
                 });
             }
+        }
+
+        function viewFunc(id) {
+            $.ajax({
+                type: "POST",
+                url: "{{ route('ptj.view') }}",
+                data: {
+                    id: id,
+                    _token: '{{ csrf_token() }}'
+                },
+                dataType: 'json',
+                success: function(res) {
+                    $('#ptjModalLabel').html("Maklumat Ptj");
+                    $('#ptj-modal').modal('show');
+                    $('#id').val(res.id);
+                    $('#kod_ptj').val(res.kod_ptj);
+                    $('#desc_ptj').val(res.desc_ptj);
+                    $('#ketua_ptj').val(res.ketua_ptj);
+                    $('#alamat_ptj').val(res.alamat_ptj);
+                    $('#kod_ptj').attr('readonly', false);
+                    $('#desc_ptj').attr('readonly', false);
+                    $('#ketua_ptj').attr('readonly', false);
+                    $('#alamat_ptj').attr('readonly', false);
+                    $('#btn-save').hide();
+                    clearErrors();
+                }
+            });
         }
 
         $('#PtjForm').submit(function(e) {

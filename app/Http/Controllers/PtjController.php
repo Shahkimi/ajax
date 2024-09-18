@@ -49,8 +49,7 @@ class PtjController extends Controller
 
         $ptj = Ptj::where(function ($query) use ($search) {
             $query->where('kod_ptj', 'like', "%$search%")
-                ->orWhere('desc_ptj', 'like', "%$search%")
-                ->orWhere('ketua_ptj', 'like', "%$search%")
+                ->orWhere('desc_ptj', 'like', "%$search%") //name ptj
                 ->orWhere('alamat_ptj', 'like', "%$search%");
         })->get();
 
