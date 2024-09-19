@@ -31,6 +31,8 @@ Easy Way
 # Create all in one
 php artisan make:model
 
+php artisan make:model xxx -mcr
+
 ############################################
 Run
 ############################################
