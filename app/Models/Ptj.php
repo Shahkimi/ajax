@@ -4,16 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ptj extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+
+    protected $table = 'ptjs';
 
     protected $fillable = [
+        'nama_ptj',
         'kod_ptj',
-        'desc_ptj',
-        'ketua_ptj',
-        'alamat_ptj',
+        'alamat',
+        'pengarah',
     ];
 
     public function bahagians()
