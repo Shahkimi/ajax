@@ -234,13 +234,10 @@ class PtjController extends Controller
     {
         Log::info('Search request received:', $request->all());
 
-        $search = $request->input('search');
-        Log::info('Search term:', ['search' => $search]);
-
-        $ptjs = Ptj::where(function ($query) use ($search) {
-            $query->where('nama_ptj', 'like', "%$search%")
-                ->orWhere('kod_ptj', 'like', "%$search%")
-                ->orWhere('alamat', 'like', "%$search%");
+        $ptj = Ptj::where(function ($query) use ($search) {
+            $query->where('kod_ptj', 'like', "%$search%")
+                ->orWhere('desc_ptj', 'like', "%$search%") //name ptj
+                ->orWhere('alamat_ptj', 'like', "%$search%");
         })->get();
 
         Log::info('Search results:', ['count' => $ptjs->count(), 'results' => $ptjs->toArray()]);
