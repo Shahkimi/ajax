@@ -60,11 +60,11 @@
                                                 <tbody>
                                                     @foreach ($bahagians as $bahagian)
                                                         <tr>
-                                                            <td>{{ strtoupper($bahagian->bahagian) }}</td>
+                                                            <td>{{ strtoupper($bahagian->nama) }}</td>
                                                             <td>
                                                                 <ul class="list-unstyled mb-0">
                                                                     @foreach ($bahagian->units as $unit)
-                                                                        <li>{{ strtoupper($unit->unit) }}</li>
+                                                                        <li>{{ strtoupper($unit->nama) }}</li>
                                                                     @endforeach
                                                                 </ul>
                                                             </td>
@@ -227,7 +227,7 @@
                     type: 'GET',
                     success: function(response) {
                         $('#edit_bahagian_id').val(response.id);
-                        $('#edit_bahagian').val(response.bahagian);
+                        $('#edit_bahagian').val(response.nama);
 
                         var action = $('#editBahagianForm').attr('action');
                         action = action.replace(':id', response.id);
@@ -238,7 +238,7 @@
                         response.units.forEach(function(unit) {
                             $('#editUnitContainer').append(`
                                 <div class="input-group mb-2">
-                                    <input type="text" class="form-control" name="units[]" value="${unit.unit}" required>
+                                    <input type="text" class="form-control" name="units[]" value="${unit.nama}" required>
                                     <input type="hidden" name="unit_ids[]" value="${unit.id}">
                                     <button type="button" class="btn btn-danger btn-sm remove-unit">Remove</button>
                                 </div>
@@ -356,10 +356,10 @@
                         if (response.data.length > 0) {
                             response.data.forEach(function(bahagian) {
                                 let row = `<tr>
-                                    <td>${bahagian.bahagian}</td>
+                                    <td>${bahagian.nama}</td>
                                     <td>
                                         <ul class="list-unstyled mb-0">
-                                            ${bahagian.units.map(unit => `<li>${unit.unit}</li>`).join('')}
+                                            ${bahagian.units.map(unit => `<li>${unit.nama}</li>`).join('')}
                                         </ul>
                                     </td>
                                     <td style="width: 1px; white-space: nowrap;">

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers;
+use App\Http\Controllers\PtjController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -124,12 +125,20 @@ Route::middleware('auth')->group(function () {
         Route::post('delete', [Controllers\JawatanController::class, 'destroy'])->name('destroy');
     });
 
-    Route::prefix('ptj')->name('ptj.')->group(function () {
-        Route::get('/', [Controllers\PtjController::class, 'index'])->name('index');
-        Route::post('search', [Controllers\PtjController::class, 'search'])->name('search');
-        Route::post('store', [Controllers\PtjController::class, 'store'])->name('store');
-        Route::post('edit', [Controllers\PtjController::class, 'edit'])->name('edit');
-        Route::post('delete', [Controllers\PtjController::class, 'destroy'])->name('destroy');
-        Route::post('view', [Controllers\PtjController::class, 'view'])->name('view');
-    });
+
+    // PTJ section
+    Route::get('/ptj', [PtjController::class, 'index'])->name('ptj.index');
+    Route::post('/ptj/store', [PtjController::class, 'store'])->name('ptj.store');
+    Route::get('/ptj/{id}', [PtjController::class, 'show'])->name('ptj.show');
+    Route::delete('/ptj/{id}', [PtjController::class, 'destroy'])->name('ptj.destroy');
+    Route::get('/ptj/{id}/edit', [PtjController::class, 'edit']);
+    Route::put('/ptj/{id}', [PtjController::class, 'update']);
+    Route::get('search', [PtjController::class, 'search'])->name('search');
+    //Bahagian section
+    Route::get('/ptj/{id}/bahagian', [PtjController::class, 'showBahagian'])->name('ptj.bahagian');
+    Route::post('/bahagian', [PtjController::class, 'storeBahagian'])->name('bahagian.store');
+    Route::delete('/bahagian/{id}', [PtjController::class, 'destroyBahagian'])->name('bahagian.destroy');
+    Route::get('/bahagian/{id}/edit', [PtjController::class, 'editBahagian'])->name('ptj.bahagian.edit');
+    Route::put('/bahagian/{id}', [PtjController::class, 'updateBahagian'])->name('ptj.bahagian.update');
+    Route::get('/bahagian/search', [PtjController::class, 'searchBahagian'])->name('bahagian.search');
 });

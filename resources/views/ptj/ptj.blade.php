@@ -1,20 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+    <!-- Form Show all data Start -->
     <div class="container">
-        <div class="row">
-            <div class="col-xl-9 mx-auto"> <!-- Center the card in the middle of the page -->
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2>PTJ</h2>
-                    <a class="btn btn-success" onClick="add()" href="javascript:void(0)">Tambah PTJ</a>
-                </div>
-
-                @if ($message = Session::get('success'))
-                    <div class="alert alert-success">
-                        <p>{{ $message }}</p>
-                    </div>
-                @endif
-
+        <div class="row justify-content-center">
+            <div class="col-md-12"> <!-- resize modal -->
                 <div class="card">
                     <div class="card-header">Multi-step Form</div>
                     <div class="card-body">
@@ -38,34 +28,63 @@
                                         </div>
                                     </form>
 
-                        <table class="table table-bordered table-striped" id="ptj">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>NO PTJ</th>
-                                    <th>Nama PTJ</th>
-                                    <th>Tindakan</th>
-                                </tr>
-                            </thead>
-                            <tbody id="ptjTableBody">
-                                @foreach ($ptj as $item)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ strtoupper($item->kod_ptj) }}</td>
-                                        <td>{{ strtoupper($item->desc_ptj) }}</td>
-                                        <td>
-                                            <a href="javascript:void(0)" onClick="viewFunc({{ $item->id }})"
-                                                class="btn btn-primary btn-sm">Lihat</a>
-                                            <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})"
-                                                class="btn btn-success btn-sm">Kemaskini</a>
-                                            <a href="javascript:void(0)" onClick="deleteFunc({{ $item->id }})"
-                                                class="btn btn-danger btn-sm">Hapus</a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        {!! $ptj->links('pagination::bootstrap-5') !!}
+                                    @if ($message = Session::get('success'))
+                                        <div class="alert alert-success">
+                                            <p>{{ $message }}</p>
+                                        </div>
+                                    @endif
+
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <table class="table table-bordered table-striped" id="ptjTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Bil</th>
+                                                        <th>Kod PTJ</th>
+                                                        <th>Nama PTJ</th>
+                                                        <th>Pengarah</th>
+                                                        <th style="text-align: center;">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="ptjTableBody">
+                                                    @foreach ($ptjs as $ptj)
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ strtoupper($ptj->kod_ptj) }}</td>
+                                                            <td>{{ strtoupper($ptj->nama_ptj) }}</td>
+                                                            <td>{{ strtoupper($ptj->pengarah) }}</td>
+                                                            <td style="text-align: center; vertical-align: middle;">
+                                                                <a href="javascript:void(0)"
+                                                                    onClick="viewFunc({{ $ptj->id }})"
+                                                                    class="btn btn-primary btn-sm d-inline-block">
+                                                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                                                </a>
+                                                                <a href="javascript:void(0)"
+                                                                    onClick="editFunc({{ $ptj->id }})"
+                                                                    class="btn btn-success btn-sm d-inline-block">
+                                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                                </a>
+                                                                <a href="javascript:void(0)"
+                                                                    onClick="bahagianFunc({{ $ptj->id }})"
+                                                                    class="btn btn-info btn-sm d-inline-block">
+                                                                    <i class="fa fa-building" aria-hidden="true"></i>
+                                                                </a>
+                                                                <a href="javascript:void(0)"
+                                                                    onClick="deleteFunc({{ $ptj->id }})"
+                                                                    class="btn btn-danger btn-sm d-inline-block">
+                                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                            {!! $ptjs->links('pagination::bootstrap-5') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -73,31 +92,98 @@
     </div>
     <!-- Form Show all data End -->
 
-
-
-
-    <!-- Modal Tambah/Edit PTJ -->
-    <div class="modal fade" id="ptj-modal" tabindex="-1" aria-labelledby="ptjModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="ptjModalLabel"></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-- Form Modal Start -->
+    <form id="multiStepForm" action="{{ route('ptj.store') }}" method="POST">
+        @csrf
+        <!-- Step 1: PTJ Modal -->
+        <div class="modal fade" id="step1Modal" tabindex="-1" aria-labelledby="step1ModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="step1ModalLabel">Step 1: Maklumat PTJ</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group mb-3">
+                            <label for="nama_ptj">Nama Hospital</label>
+                            <input type="text" class="form-control" name="nama_ptj" required
+                                placeholder="Masukkan Nama Hospital">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="kod_ptj">Kod Hospital</label>
+                            <input type="text" class="form-control" name="kod_ptj" required
+                                placeholder="Masukkan Kod Hospital">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="alamat">Alamat Hospital</label>
+                            <input type="text" class="form-control" name="alamat" required
+                                placeholder="Masukkan Alamat Hospital">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="pengarah">Nama Pengarah</label>
+                            <input type="text" class="form-control" name="pengarah" required
+                                placeholder="Masukkkan Nama Pengarah">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary next-step" data-bs-target="#step2Modal">Next</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <form id="PtjForm" name="PtjForm">
-                        <input type="hidden" name="id" id="id">
-                        <div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="kod_ptj" class="form-label">No Ptj</label>
-                                    <input type="text" class="form-control" id="kod_ptj" name="kod_ptj" maxlength="50"
-                                        required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="desc_ptj" class="form-label">Nama Ptj</label>
-                                    <input type="text" class="form-control" id="desc_ptj" name="desc_ptj"
-                                        maxlength="100" required>
+            </div>
+        </div>
+
+        <!-- Step 2: Bahagian Modal -->
+        <div class="modal fade" id="step2Modal" tabindex="-1" aria-labelledby="step2ModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="step2ModalLabel">Step 2: Maklumat Bahagian</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group mb-3">
+                            <label for="bahagian">Bahagian</label>
+                            <input type="text" class="form-control" name="bahagian" required
+                                placeholder="Enter section name">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary prev-step"
+                            data-bs-target="#step1Modal">Previous</button>
+                        <button type="button" class="btn btn-primary next-step"
+                            data-bs-target="#step3Modal">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: Unit Modal -->
+        <div class="modal fade" id="step3Modal" tabindex="-1" aria-labelledby="step3ModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="step3ModalLabel">Step 3: Maklumat Unit</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group mb-3 d-flex justify-content-end">
+                            <label for="unit" class="me-auto ms-2">Unit</label>
+                            <button type="button" class="btn btn-primary btn-sm" id="addUnit">
+                                <i class="fa fa-plus"></i> Add More Unit
+                            </button>
+                        </div>
+                        <div id="unitContainer">
+                            <div class="unit-entry">
+                                <div class="row align-items-center">
+                                    <div class="col-10">
+                                        <input type="text" name="units[]" class="form-control"
+                                            placeholder="Enter unit name" required>
+                                    </div>
+                                    <div class="col-2 d-flex align-items-center">
+                                        <button type="button" class="btn btn-danger btn-sm remove-unit">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -472,50 +558,8 @@
             console.log('Search query:', searchQuery);
 
             $.ajax({
-                type: 'POST',
-                url: '{{ route('ptj.search') }}',
-                data: {
-                    search: searchQuery
-                },
-                success: function(response) {
-                    let rows = '';
-                    response.data.forEach(function(item, index) {
-                        rows += `
-                            <tr>
-                                <td>${index + 1}</td>
-                                <td>${item.kod_ptj}</td>
-                                <td>${item.desc_ptj}</td>
-                                <td>
-                                    <a href="javascript:void(0)" onClick="editFunc(${item.id})"
-                                        class="btn btn-success btn-sm">Kemaskini</a>
-                                    <a href="javascript:void(0)" onClick="deleteFunc(${item.id})"
-                                        class="btn btn-danger btn-sm">Hapus</a>
-                                </td>
-                            </tr>`;
-                    });
-                    $('#ptjTableBody').html(rows);
-                }
-            });
-        });
-
-        //Add Data
-        function add() {
-            $('#PtjForm').trigger("reset");
-            $('#ptjModalLabel').html("Tambah Ptj");
-            $('#ptj-modal').modal('show');
-            $('#id').val('');
-            $('#kod_ptj').attr('readonly', false);
-            $('#desc_ptj').attr('readonly', false);
-            $('#ketua_ptj').attr('readonly', false);
-            $('#alamat_ptj').attr('readonly', false);
-            $('#btn-save').show();
-        }
-
-        //Edit data
-        function editFunc(id) {
-            $.ajax({
-                type: "POST",
-                url: "{{ route('ptj.edit') }}",
+                type: 'GET',
+                url: '{{ route('search') }}',
                 data: {
                     search: searchQuery
                 },
@@ -558,51 +602,6 @@
                     } else {
                         $('#ptjTableBody').html('<tr><td colspan="5">No results found</td></tr>');
                     }
-                });
-            }
-        }
-
-        function viewFunc(id) {
-            $.ajax({
-                type: "POST",
-                url: "{{ route('ptj.view') }}",
-                data: {
-                    id: id,
-                    _token: '{{ csrf_token() }}'
-                },
-                dataType: 'json',
-                success: function(res) {
-                    $('#ptjModalLabel').html("Maklumat Ptj");
-                    $('#ptj-modal').modal('show');
-                    $('#id').val(res.id);
-                    $('#kod_ptj').val(res.kod_ptj);
-                    $('#desc_ptj').val(res.desc_ptj);
-                    $('#ketua_ptj').val(res.ketua_ptj);
-                    $('#alamat_ptj').val(res.alamat_ptj);
-                    $('#kod_ptj').attr('readonly', false);
-                    $('#desc_ptj').attr('readonly', false);
-                    $('#ketua_ptj').attr('readonly', false);
-                    $('#alamat_ptj').attr('readonly', false);
-                    $('#btn-save').hide();
-                    clearErrors();
-                }
-            });
-        }
-
-        $('#PtjForm').submit(function(e) {
-            e.preventDefault();
-            var formData = new FormData(this);
-            formData.append('_token', '{{ csrf_token() }}');
-            $.ajax({
-                type: 'POST',
-                url: "{{ route('ptj.store') }}",
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function(data) {
-                    $("#ptj-modal").modal('hide');
-                    window.location.reload();
                 },
                 error: function(xhr, status, error) {
                     console.error('Search error:', error);
