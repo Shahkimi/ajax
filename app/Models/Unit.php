@@ -12,7 +12,7 @@ class Unit extends Model
 
     protected $fillable = [
         'bahagian_id',
-        'nama',
+        'nama_unit',
     ];
 
     public function bahagian()

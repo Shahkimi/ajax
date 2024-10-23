@@ -24,7 +24,7 @@ return new class extends Migration
         Schema::create('bahagians', function (Blueprint $table) {
             $table->id();
             $table->foreignId('ptj_id')->constrained('ptjs')->onDelete('cascade');
-            $table->string('nama');
+            $table->string('nama_bahagian');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -32,7 +32,7 @@ return new class extends Migration
         Schema::create('units', function (Blueprint $table) {
             $table->id();
             $table->foreignId('bahagian_id')->constrained('bahagians')->onDelete('cascade');
-            $table->string('nama');
+            $table->string('nama_unit');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -12,7 +12,7 @@ class Bahagian extends Model
 
     protected $fillable = [
         'ptj_id',
-        'nama',
+        'nama_bahagian',
     ];
 
     public function ptj()
