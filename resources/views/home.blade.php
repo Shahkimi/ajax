@@ -17,81 +17,54 @@
                         {{ __('You are logged in!') }}
                         <div  class="padding:20px">&nbsp;</div>
 
-                        <table class="table">
-                            <thead></thead>
-                            <tbody>
-                                <tr class="table-active">
-                                    <th scope="row"></th>
-                                    <td colspan="2" class="table-active">Kawalan</td>
-                                    <td><a href="/agama">Agama</a></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"></th>
-                                   <td colspan="2"></td>
-                                    <td><a href="/bangsa">Bangsa</a></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"></th>
-                                    <td colspan="2"></td>
-                                    <td><a href="/gelaran">Gelaran</a></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"></th>
-                                    <td colspan="2"></td>
-                                    <td><a href="/gkategori">Kumpulan Kategori</a></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"></th>
-                                    <td colspan="2"></td>
-                                    <td><a href="/kesalahan">Kesalahan</a></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"></th>
-                                    <td colspan="2"></td>
-                                    <td><a href="/akta">Akta</a></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"></th>
-                                    <td colspan="2"></td>
-                                    <td><a href="/status">Status</a></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"></th>
-                                    <td colspan="2"></td>
-                                    <td><a href="/hukuman">Hukuman</a></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"></th>
-                                    <td colspan="2"></td>
-                                    <td><a href="/panel">Panel</a></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"></th>
-                                    <td colspan="2"></td>
-                                    <td><a href="/gred">Gred</a></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"></th>
-                                    <td colspan="2"></td>
-                                    <td><a href="/jawatan">Jawatan</a></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"></th>
-                                    <td colspan="2"></td>
-                                    <td><a href="/ptj">Ptj</a></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"></th>
-                                    <td colspan="2" class="table-active">Kawalan / Cuti</td>
-                                    <td><a href="/gcuti">Jenis Cuti</a></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"></th>
-                                    <td colspan="2"></td>
-                                    <td><a href="/gkcuti">Jenis Kumpulan Cuti</a></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                            <div class="container-fluid">
+                                <a class="navbar-brand" href="#">Navbar</a>
+                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Perkhidmatan
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="/ptj">Carian Pegawai</a></li>
+                                            <li><a class="dropdown-item" href="/panel">Panel PPSM</a></li>
+                                            <li><a class="dropdown-item" href="/agama">Agama</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                    <a class="nav-link" href="#">Link</a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Kawalan
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="/ptj">Ptj</a></li>
+                                            <li><a class="dropdown-item" href="/panel">Panel PPSM</a></li>
+                                            <li><a class="dropdown-item" href="/agama">Agama</a></li>
+                                            <li><a class="dropdown-item" href="/bangsa">Bangsa</a></li>
+                                            <li><a class="dropdown-item" href="/gelaran">Gelaran</a></li>
+                                            <li><a class="dropdown-item" href="#">Kod Jawatan *</a></li>
+                                            <li><a class="dropdown-item" href="/gkategori">Kod Kategori</a></li>
+                                            <li><a class="dropdown-item" href="/jawatan">Jawatan</a></li>
+                                            <li><a class="dropdown-item" href="/akta">Akta</a></li>
+                                            <li><a class="dropdown-item" href="/gred">Gred</a></li>
+                                            <li><a class="dropdown-item" href="/hukuman">Hukuman</a></li>
+                                            <li><a class="dropdown-item" href="/kesalahan">Kesalahan</a></li>
+                                            <li><a class="dropdown-item" href="/status">Status</a></li>
+                                            <li><a class="dropdown-item" href="/gcuti">Jenis Cuti</a></li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li><a class="dropdown-item" href="/gkcuti"> 1. Kumpulan Cuti</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                </div>
+                            </div>
+                            </nav>
                     </div>
                 </div>
             </div>

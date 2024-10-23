@@ -142,9 +142,8 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group mb-3">
-                            <label for="bahagian">Bahagian</label>
-                            <input type="text" class="form-control" name="bahagian" required
-                                placeholder="Enter section name">
+                            <label for="nama_bahagian">Bahagian</label>
+                            <input type="text" class="form-control" name="nama_bahagian" required placeholder="Enter section name">
                         </div>
                     </div>
                     <div class="modal-footer">

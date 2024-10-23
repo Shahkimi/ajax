@@ -60,11 +60,11 @@
                                                 <tbody>
                                                     @foreach ($bahagians as $bahagian)
                                                         <tr>
-                                                            <td>{{ strtoupper($bahagian->nama) }}</td>
+                                                            <td>{{ strtoupper($bahagian->nama_bahagian) }}</td>
                                                             <td>
                                                                 <ul class="list-unstyled mb-0">
                                                                     @foreach ($bahagian->units as $unit)
-                                                                        <li>{{ strtoupper($unit->nama) }}</li>
+                                                                        <li>{{ strtoupper($unit->nama_unit) }}</li>
                                                                     @endforeach
                                                                 </ul>
                                                             </td>
@@ -110,7 +110,7 @@
                             <input type="hidden" name="ptj_id" value="{{ $ptj->id }}">
                             <div class="mb-3">
                                 <label for="bahagian" class="form-label">Nama Bahagian</label>
-                                <input type="text" class="form-control" id="bahagian" name="bahagian" required>
+                                <input type="text" class="form-control" id="nama_bahagian" name="nama_bahagian" required>
                             </div>
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
@@ -151,7 +151,7 @@
                             <input type="hidden" id="edit_bahagian_id" name="bahagian_id">
                             <div class="mb-3">
                                 <label for="edit_bahagian" class="form-label">Bahagian Name</label>
-                                <input type="text" class="form-control" id="edit_bahagian" name="bahagian" required>
+                                <input type="text" class="form-control" id="edit_bahagian" name="nama_bahagian" required>
                             </div>
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
@@ -227,7 +227,7 @@
                     type: 'GET',
                     success: function(response) {
                         $('#edit_bahagian_id').val(response.id);
-                        $('#edit_bahagian').val(response.nama);
+                        $('#edit_bahagian').val(response.nama_bahagian); //edit sini
 
                         var action = $('#editBahagianForm').attr('action');
                         action = action.replace(':id', response.id);
@@ -238,7 +238,7 @@
                         response.units.forEach(function(unit) {
                             $('#editUnitContainer').append(`
                                 <div class="input-group mb-2">
-                                    <input type="text" class="form-control" name="units[]" value="${unit.nama}" required>
+                                    <input type="text" class="form-control" name="units[]" value="${unit.nama_unit}" required>
                                     <input type="hidden" name="unit_ids[]" value="${unit.id}">
                                     <button type="button" class="btn btn-danger btn-sm remove-unit">Remove</button>
                                 </div>
@@ -356,10 +356,10 @@
                         if (response.data.length > 0) {
                             response.data.forEach(function(bahagian) {
                                 let row = `<tr>
-                                    <td>${bahagian.nama}</td>
+                                    <td>${bahagian.nama_bahagian}</td>
                                     <td>
                                         <ul class="list-unstyled mb-0">
-                                            ${bahagian.units.map(unit => `<li>${unit.nama}</li>`).join('')}
+                                            ${bahagian.units.map(unit => `<li>${unit.nama_unit}</li>`).join('')}
                                         </ul>
                                     </td>
                                     <td style="width: 1px; white-space: nowrap;">

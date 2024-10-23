@@ -24,14 +24,14 @@ class PtjController extends Controller
 
     public function store(Request $request)
     {
-        Log:info('Store request received:', $request->all());
+        Log::info('Store request received:', $request->all());
 
         $validator = Validator::make($request->all(), [
             'nama_ptj' => 'required|string|max:255',
             'kod_ptj' => 'required|integer',
             'alamat' => 'required|string|max:255',
             'pengarah' => 'required|string|max:255',
-            'bahagian' => 'required|string|max:255',
+            'nama_bahagian' => 'required|string|max:255',
             'units' => 'required|array',
             'units.*' => 'required|string|max:255',
         ]);
@@ -44,23 +44,30 @@ class PtjController extends Controller
         try {
             DB::beginTransaction();
 
-            $ptj = Ptj::create($validator->validated());
+            // Create PTJ record
+            $ptj = Ptj::create([
+                'nama_ptj' => $request->nama_ptj,
+                'kod_ptj' => $request->kod_ptj,
+                'alamat' => $request->alamat,
+                'pengarah' => $request->pengarah,
+            ]);
             Log::info('New PTJ created:', $ptj->toArray());
 
+            // Create Bahagian record using the nama_bahagian from request
             $bahagian = $ptj->bahagians()->create([
-                'nama' => $request->bahagian,
+                'nama_bahagian' => $request->nama_bahagian,
             ]);
             Log::info('New Bahagian created:', $bahagian->toArray());
 
+            // Create Unit records
             foreach ($request->units as $unit) {
                 $createdUnit = $bahagian->units()->create([
-                    'nama' => $unit,
+                    'nama_unit' => $unit,
                 ]);
                 Log::info('Unit created:', $createdUnit->toArray());
             }
 
             DB::commit();
-
             return response()->json(['message' => 'Data saved successfully!'], 200);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -96,7 +103,8 @@ class PtjController extends Controller
     public function showBahagian($id)
     {
         $ptj = Ptj::findOrFail($id);
-        $bahagians = $ptj->bahagians()->with('units')->paginate(6);
+        $bahagians = $ptj->bahagians()->with('units')->latest()->paginate(6);
+
         return view('ptj.bahagian', compact('ptj', 'bahagians'));
     }
 
@@ -104,7 +112,7 @@ class PtjController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'ptj_id' => 'required|exists:ptjs,id',
-            'bahagian' => 'required|string|max:255',
+            'nama_bahagian' => 'required|string|max:255',
             'units' => 'required|array',
             'units.*' => 'required|string|max:255',
         ]);
@@ -118,12 +126,12 @@ class PtjController extends Controller
 
             $bahagian = Bahagian::create([
                 'ptj_id' => $request->ptj_id,
-                'bahagian' => $request->bahagian,
+                'nama_bahagian' => $request->nama_bahagian,
             ]);
 
             foreach ($request->units as $unit) {
                 $bahagian->units()->create([
-                    'unit' => $unit,
+                    'nama_unit' => $unit,
                 ]);
             }
 
@@ -166,7 +174,7 @@ class PtjController extends Controller
     public function updateBahagian(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'bahagian' => 'required|string|max:255',
+            'nama_bahagian' => 'required|string|max:255',
             'units' => 'required|array',
             'units.*' => 'required|string|max:255',
             'unit_ids' => 'required|array',
@@ -181,14 +189,14 @@ class PtjController extends Controller
             DB::beginTransaction();
 
             $bahagian = Bahagian::findOrFail($id);
-            $bahagian->update(['nama' => $request->bahagian]);
+            $bahagian->update(['nama_bahagian' => $request->nama_bahagian]); // adjust part sini
 
             // Update or create units
             foreach ($request->units as $index => $unitName) {
                 if (!empty($request->unit_ids[$index])) {
-                    Unit::where('id', $request->unit_ids[$index])->update(['nama' => $unitName]);
+                    Unit::where('id', $request->unit_ids[$index])->update(['nama_unit' => $unitName]); // adjust part sini
                 } else {
-                    $bahagian->units()->create(['nama' => $unitName]);
+                    $bahagian->units()->create(['nama_unit' => $unitName]); // adjust part sini
                 }
             }
 
@@ -267,9 +275,9 @@ class PtjController extends Controller
 
         $bahagians = Bahagian::where('ptj_id', $ptjId)
             ->where(function ($query) use ($search) {
-                $query->where('bahagian', 'like', "%$search%")
+                $query->where('nama_bahagian', 'like', "%$search%")
                     ->orWhereHas('units', function ($unitQuery) use ($search) {
-                        $unitQuery->where('unit', 'like', "%$search%");
+                        $unitQuery->where('nama_unit', 'like', "%$search%");
                     });
             })
             ->with('units')
