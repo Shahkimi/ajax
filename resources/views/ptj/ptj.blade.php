@@ -116,8 +116,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="alamat">Alamat Hospital</label>
-                            <input type="text" class="form-control" name="alamat" required
-                                placeholder="Masukkan Alamat Hospital">
+                            <textarea class="form-control" name="alamat" rows="5" required placeholder="Masukkan Alamat Hospital"></textarea>
                         </div>
                         <div class="form-group mb-3">
                             <label for="pengarah">Nama Pengarah</label>
