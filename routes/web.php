@@ -126,19 +126,28 @@ Route::middleware('auth')->group(function () {
     });
 
 
-    // PTJ section
-    Route::get('/ptj', [PtjController::class, 'index'])->name('ptj.index');
-    Route::post('/ptj/store', [PtjController::class, 'store'])->name('ptj.store');
-    Route::get('/ptj/{id}', [PtjController::class, 'show'])->name('ptj.show');
-    Route::delete('/ptj/{id}', [PtjController::class, 'destroy'])->name('ptj.destroy');
-    Route::get('/ptj/{id}/edit', [PtjController::class, 'edit']);
-    Route::put('/ptj/{id}', [PtjController::class, 'update']);
-    Route::get('search', [PtjController::class, 'search'])->name('search');
-    //Bahagian section
-    Route::get('/ptj/{id}/bahagian', [PtjController::class, 'showBahagian'])->name('ptj.bahagian');
-    Route::post('/bahagian', [PtjController::class, 'storeBahagian'])->name('bahagian.store');
-    Route::delete('/bahagian/{id}', [PtjController::class, 'destroyBahagian'])->name('bahagian.destroy');
-    Route::get('/bahagian/{id}/edit', [PtjController::class, 'editBahagian'])->name('ptj.bahagian.edit');
-    Route::put('/bahagian/{id}', [PtjController::class, 'updateBahagian'])->name('ptj.bahagian.update');
-    Route::get('/bahagian/search', [PtjController::class, 'searchBahagian'])->name('bahagian.search');
+    Route::prefix('ptj')->group(function () {
+        // PTJ routes
+        Route::get('/', [PtjController::class, 'index'])->name('ptj.index');
+        Route::post('/store', [PtjController::class, 'store'])->name('ptj.store');
+        Route::get('/{id}', [PtjController::class, 'show'])->name('ptj.show');
+        Route::delete('/{id}', [PtjController::class, 'destroy'])->name('ptj.destroy');
+        Route::get('/{id}/edit', [PtjController::class, 'edit']);
+        Route::put('/{id}', [PtjController::class, 'update']);
+        Route::get('/search', [PtjController::class, 'search'])->name('search');
+
+        // Bahagian routes - nested under ptj prefix
+        Route::prefix('{id}/bahagian')->group(function () {
+            Route::get('/', [PtjController::class, 'showBahagian'])->name('ptj.bahagian');
+        });
+    });
+
+    // Separate bahagian routes that don't need ptj prefix
+    Route::prefix('bahagian')->group(function () {
+        Route::post('/', [PtjController::class, 'storeBahagian'])->name('bahagian.store');
+        Route::delete('/{id}', [PtjController::class, 'destroyBahagian'])->name('bahagian.destroy');
+        Route::get('/{id}/edit', [PtjController::class, 'editBahagian'])->name('ptj.bahagian.edit');
+        Route::put('/{id}', [PtjController::class, 'updateBahagian'])->name('ptj.bahagian.update');
+        Route::get('/search', [PtjController::class, 'searchBahagian'])->name('bahagian.search');
+    });
 });
