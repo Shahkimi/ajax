@@ -15,7 +15,7 @@ class GelaranController extends Controller
      */
     public function index()
     {
-        $gelaran = Gelaran::latest()->paginate(10);
+        $gelaran = Gelaran::orderBy('nama_gelaran', 'desc')->paginate(10);
         return view('gelaran.gelaran', compact('gelaran'));
     }
 

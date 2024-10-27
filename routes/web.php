@@ -33,7 +33,6 @@ Route::middleware('auth')->group(function () {
         Route::post('store', [Controllers\AgamaController::class, 'store'])->name('store');
         Route::post('edit', [Controllers\AgamaController::class, 'edit'])->name('edit');
         Route::post('delete', [Controllers\AgamaController::class, 'destroy'])->name('destroy');
-        Route::post('view', [Controllers\AgamaController::class, 'view'])->name('view');
     });
 
     Route::prefix('bangsa')->name('bangsa.')->group(function () {
@@ -41,7 +40,6 @@ Route::middleware('auth')->group(function () {
         Route::post('store', [Controllers\BangsaController::class, 'store'])->name('store');
         Route::post('edit', [Controllers\BangsaController::class, 'edit'])->name('edit');
         Route::post('delete', [Controllers\BangsaController::class, 'destroy'])->name('destroy');
-        Route::post('view', [Controllers\BangsaController::class, 'view'])->name('view');
     });
 
     Route::prefix('gelaran')->name('gelaran.')->group(function () {
@@ -49,7 +47,6 @@ Route::middleware('auth')->group(function () {
         Route::post('store', [Controllers\GelaranController::class, 'store'])->name('store');
         Route::post('edit', [Controllers\GelaranController::class, 'edit'])->name('edit');
         Route::post('delete', [Controllers\GelaranController::class, 'destroy'])->name('destroy');
-        Route::post('view', [Controllers\GelaranController::class, 'view'])->name('view');
     });
 
     Route::prefix('gkategori')->name('gkategori.')->group(function () {
@@ -57,7 +54,6 @@ Route::middleware('auth')->group(function () {
         Route::post('store', [Controllers\GkategoriController::class, 'store'])->name('store');
         Route::post('edit', [Controllers\GkategoriController::class, 'edit'])->name('edit');
         Route::post('delete', [Controllers\GkategoriController::class, 'destroy'])->name('destroy');
-        Route::post('view', [Controllers\GkategoriController::class, 'view'])->name('view');
     });
 
     Route::prefix('gcuti')->name('gcuti.')->group(function () {

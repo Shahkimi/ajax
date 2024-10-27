@@ -25,7 +25,6 @@ class GelaranRequest extends FormRequest
     {
         return [
             'nama_gelaran' => 'required|max:50',
-            'desc_gelaran' => 'required|max:100',
         ];
     }
 
@@ -38,7 +37,6 @@ class GelaranRequest extends FormRequest
     {
         return [
             'nama_gelaran' => 'nama gelaran',
-            'desc_gelaran' => 'deskripsi gelaran',
         ];
     }
 }

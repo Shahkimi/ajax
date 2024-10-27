@@ -34,8 +34,6 @@
                                             <td>{{ $item->nama_agama }}</td>
                                             <td style="width: 1px; white-space: nowrap; text-align: center;">{{ $item->created_at->format('d-m-Y') }}</td>
                                             <td class="text-center" style="width: 1px; white-space: nowrap;">
-                                                <a href="javascript:void(0)" onClick="viewFunc({{ $item->id }})"
-                                                    class="btn btn-primary btn-sm"> <i class="fa fa-eye" aria-hidden="true"></i> Lihat</a>
                                                 <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})"
                                                     class="btn btn-success btn-sm"> <i class="fa fa-pencil" aria-hidden="true"></i> Kemaskini</a>
                                                 <a href="javascript:void(0)" onClick="deleteFunc({{ $item->id }})"
@@ -135,27 +133,6 @@
                     }
                 });
             }
-        }
-
-        function viewFunc(id) {
-            $.ajax({
-                type: "POST",
-                url: "{{ route('agama.view') }}",
-                data: {
-                    id: id,
-                    _token: '{{ csrf_token() }}'
-                },
-                dataType: 'json',
-                success: function(res) {
-                    $('#agamaModalLabel').html("Lihat Agama");
-                    $('#agama-modal').modal('show');
-                    $('#id').val(res.id);
-                    $('#nama_agama').val(res.nama_agama);
-                    $('#nama_agama').attr('readonly', true);
-                    $('#btn-save').hide();
-                    clearErrors();
-                }
-            });
         }
 
         $('#AgamaForm').submit(function(e) {

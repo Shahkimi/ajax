@@ -25,7 +25,6 @@ class GkategoriRequest extends FormRequest
     {
         return [
             'nama_kategori' => 'required|max:50',
-            'desc_kategori' => 'required|max:100',
         ];
     }
 
@@ -38,7 +37,6 @@ class GkategoriRequest extends FormRequest
     {
         return [
             'nama_kategori' => 'nama kategori',
-            'desc_kategori' => 'deskripsi kategori',
         ];
     }
 }

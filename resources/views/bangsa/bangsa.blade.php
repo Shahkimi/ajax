@@ -18,7 +18,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped" id="agama">
+                            <table class="table table-bordered table-striped" id="bangsa">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -34,8 +34,6 @@
                                             <td>{{ $item->nama_bangsa }}</td>
                                             <td style="width: 1px; white-space: nowrap; text-align: center;">{{ $item->created_at->format('d-m-Y') }}</td>
                                             <td class="text-center" style="width: 1px; white-space: nowrap;">
-                                                <a href="javascript:void(0)" onClick="viewFunc({{ $item->id }})"
-                                                    class="btn btn-primary btn-sm"> <i class="fa fa-eye" aria-hidden="true"></i> Lihat</a>
                                                 <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})"
                                                     class="btn btn-success btn-sm"> <i class="fa fa-pencil" aria-hidden="true"></i> Kemaskini</a>
                                                 <a href="javascript:void(0)" onClick="deleteFunc({{ $item->id }})"
@@ -135,27 +133,6 @@
                     }
                 });
             }
-        }
-
-        //View Data
-        function viewFunc(id) {
-            $.ajax({
-                type: "POST",
-                url: "{{ route('bangsa.view') }}",
-                data: {
-                    id: id,
-                    _token: '{{ csrf_token() }}'
-                },
-                dataType: 'json',
-                success: function(res) {
-                    $('#bangsaModalLabel').html("Lihat Bangsa");
-                    $('#bangsa-modal').modal('show');
-                    $('#id').val(res.id);
-                    $('#nama_bangsa').val(res.nama_bangsa);
-                    $('#nama_bangsa').attr('readonly', true);
-                    $('#btn-save').hide();
-                }
-            });
         }
 
         $('#BangsaForm').submit(function(e) {

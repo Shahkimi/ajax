@@ -11,6 +11,5 @@ class Gelaran extends Model
 
     protected $fillable = [
         'nama_gelaran',
-        'desc_gelaran',
     ];
 }

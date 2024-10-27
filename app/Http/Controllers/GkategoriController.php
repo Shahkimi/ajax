@@ -15,7 +15,7 @@ class GkategoriController extends Controller
      */
     public function index()
     {
-        $gkategori = Gkategori::latest()->paginate(10);
+        $gkategori = Gkategori::orderBy('nama_kategori', 'desc')->paginate(10);
         return view('gkategori.gkategori', compact('gkategori'));
     }
 

@@ -11,6 +11,5 @@ class Gkategori extends Model
 
     protected $fillable = [
         'nama_kategori',
-        'desc_kategori',
     ];
 }
