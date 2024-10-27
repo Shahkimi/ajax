@@ -1,54 +1,54 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-lg-12">
+    <div class="container-fluid d-flex justify-content-center align-items-start min-vh-100 py-4">
+        <div class="row w-100" style="max-width: 1000px;">
+            <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2>Bangsa</h2>
-                    <a class="btn btn-success" onClick="add()" href="javascript:void(0)">Tambah Bangsa</a>
+                    <a class="btn btn-success" onClick="add()" href="javascript:void(0)"><i class="fa fa-plus" aria-hidden="true"></i> Tambah Bangsa</a>
                 </div>
 
                 @if ($message = Session::get('success'))
                     <div class="alert alert-success">
-                        <p>{{ $message }}</p>
+                        <p class="mb-0">{{ $message }}</p>
                     </div>
                 @endif
 
                 <div class="card">
                     <div class="card-body">
-                        <table class="table table-bordered table-striped" id="bangsa">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Bangsa</th>
-                                    <th>Deskripsi</th>
-                                    <th>Tarikh Dicipta</th>
-                                    <th>Tindakan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($bangsa as $item)
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped" id="agama">
+                                <thead>
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->nama_bangsa }}</td>
-                                        <td>{{ $item->desc_bangsa }}</td>
-                                        <td>{{ $item->created_at->format('d-m-Y H:i') }}</td>
-                                        <td>
-                                            <a href="javascript:void(0)" onClick="viewFunc({{ $item->id }})"
-                                                class="btn btn-primary btn-sm">Lihat</a>
-                                            <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})"
-                                                class="btn btn-success btn-sm">Kemaskini</a>
-                                            <a href="javascript:void(0)" onClick="deleteFunc({{ $item->id }})"
-                                                class="btn btn-danger btn-sm">Hapus</a>
-                                        </td>
+                                        <th>No</th>
+                                        <th>Bangsa</th>
+                                        <th style="white-space: nowrap; text-align: center;">Last Update</th>
+                                        <th class="text-center">Tindakan</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        {{-- <div class="d-flex justify-content-center"> --}}
-                        {!! $bangsa->links('pagination::bootstrap-5') !!}
-                        {{-- </div> --}}
+                                </thead>
+                                <tbody>
+                                    @foreach ($bangsa as $item)
+                                        <tr>
+                                            <td style="width: 1px; white-space: nowrap; text-align: center;">{{ $loop->iteration }}</td>
+                                            <td>{{ $item->nama_bangsa }}</td>
+                                            <td style="width: 1px; white-space: nowrap; text-align: center;">{{ $item->created_at->format('d-m-Y') }}</td>
+                                            <td class="text-center" style="width: 1px; white-space: nowrap;">
+                                                <a href="javascript:void(0)" onClick="viewFunc({{ $item->id }})"
+                                                    class="btn btn-primary btn-sm"> <i class="fa fa-eye" aria-hidden="true"></i> Lihat</a>
+                                                <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})"
+                                                    class="btn btn-success btn-sm"> <i class="fa fa-pencil" aria-hidden="true"></i> Kemaskini</a>
+                                                <a href="javascript:void(0)" onClick="deleteFunc({{ $item->id }})"
+                                                    class="btn btn-danger btn-sm"> <i class="fa fa-trash" aria-hidden="true"></i> Hapus</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="d-flex justify-content-center mt-3">
+                            {!! $bangsa->links('pagination::bootstrap-5') !!}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -69,11 +69,6 @@
                         <div class="mb-3">
                             <label for="nama_bangsa" class="form-label">Nama Bangsa</label>
                             <input type="text" class="form-control" id="nama_bangsa" name="nama_bangsa" maxlength="50"
-                                required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="desc_bangsa" class="form-label">Deskripsi</label>
-                            <input type="text" class="form-control" id="desc_bangsa" name="desc_bangsa" maxlength="100"
                                 required>
                         </div>
                     </form>
@@ -100,7 +95,6 @@
             $('#bangsa-modal').modal('show');
             $('#id').val('');
             $('#nama_bangsa').attr('readonly', false);
-            $('#desc_bangsa').attr('readonly', false);
             $('#btn-save').show();
         }
 
@@ -119,9 +113,7 @@
                     $('#bangsa-modal').modal('show');
                     $('#id').val(res.id);
                     $('#nama_bangsa').val(res.nama_bangsa);
-                    $('#desc_bangsa').val(res.desc_bangsa);
                     $('#nama_bangsa').attr('readonly', false);
-                    $('#desc_bangsa').attr('readonly', false);
                     $('#btn-save').show();
                 }
             });
@@ -160,9 +152,7 @@
                     $('#bangsa-modal').modal('show');
                     $('#id').val(res.id);
                     $('#nama_bangsa').val(res.nama_bangsa);
-                    $('#desc_bangsa').val(res.desc_bangsa);
                     $('#nama_bangsa').attr('readonly', true);
-                    $('#desc_bangsa').attr('readonly', true);
                     $('#btn-save').hide();
                 }
             });

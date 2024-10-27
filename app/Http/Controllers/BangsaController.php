@@ -15,7 +15,7 @@ class BangsaController extends Controller
      */
     public function index()
     {
-        $bangsa = Bangsa::latest()->paginate(10);
+        $bangsa = Bangsa::orderBy('nama_bangsa', 'desc')->paginate(10);
         return view('bangsa.bangsa', compact('bangsa'));
     }
 

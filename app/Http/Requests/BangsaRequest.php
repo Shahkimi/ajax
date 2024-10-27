@@ -25,7 +25,6 @@ class BangsaRequest extends FormRequest
     {
         return [
             'nama_bangsa' => 'required|max:50',
-            'desc_bangsa' => 'required|max:100',
         ];
     }
 
@@ -38,7 +37,6 @@ class BangsaRequest extends FormRequest
     {
         return [
             'nama_bangsa' => 'nama bangsa',
-            'desc_bangsa' => 'deskripsi bangsa',
         ];
     }
 }

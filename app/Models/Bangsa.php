@@ -11,6 +11,5 @@ class Bangsa extends Model
 
     protected $fillable = [
         'nama_bangsa',
-        'desc_bangsa',
     ];
 }
