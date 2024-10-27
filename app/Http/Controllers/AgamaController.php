@@ -16,7 +16,7 @@ class AgamaController extends Controller
      */
     public function index()
     {
-        $agama = Agama::latest()->paginate(10);
+        $agama = Agama::orderBy('nama_agama', 'desc')->paginate(10);
         return view('agama.agama', compact('agama'));
     }
 

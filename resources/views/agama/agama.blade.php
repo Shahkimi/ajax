@@ -1,54 +1,54 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-lg-12">
+    <div class="container-fluid d-flex justify-content-center align-items-start min-vh-100 py-4">
+        <div class="row w-100" style="max-width: 1000px;">
+            <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2>Agama</h2>
-                    <a class="btn btn-success" onClick="add()" href="javascript:void(0)">Tambah Agama</a>
+                    <a class="btn btn-success" onClick="add()" href="javascript:void(0)"><i class="fa fa-plus" aria-hidden="true"></i> Tambah Agama</a>
                 </div>
 
                 @if ($message = Session::get('success'))
                     <div class="alert alert-success">
-                        <p>{{ $message }}</p>
+                        <p class="mb-0">{{ $message }}</p>
                     </div>
                 @endif
 
                 <div class="card">
                     <div class="card-body">
-                        <table class="table table-bordered table-striped" id="agama">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Agama</th>
-                                    <th>Deskripsi</th>
-                                    <th>Tarikh Dicipta</th>
-                                    <th>Tindakan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($agama as $item)
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped" id="agama">
+                                <thead>
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->nama_agama }}</td>
-                                        <td>{{ $item->desc_agama }}</td>
-                                        <td>{{ $item->created_at->format('d-m-Y H:i') }}</td>
-                                        <td>
-                                            <a href="javascript:void(0)" onClick="viewFunc({{ $item->id }})"
-                                                class="btn btn-primary btn-sm">Lihat</a>
-                                            <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})"
-                                                class="btn btn-success btn-sm">Kemaskini</a>
-                                            <a href="javascript:void(0)" onClick="deleteFunc({{ $item->id }})"
-                                                class="btn btn-danger btn-sm">Hapus</a>
-                                        </td>
+                                        <th>No</th>
+                                        <th>Agama</th>
+                                        <th style="white-space: nowrap; text-align: center;">Last Update</th>
+                                        <th class="text-center">Tindakan</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        {{-- <div class="d-flex justify-content-center"> --}}
-                        {!! $agama->links('pagination::bootstrap-5') !!}
-                        {{-- </div> --}}
+                                </thead>
+                                <tbody>
+                                    @foreach ($agama as $item)
+                                        <tr>
+                                            <td style="width: 1px; white-space: nowrap; text-align: center;">{{ $loop->iteration }}</td>
+                                            <td>{{ $item->nama_agama }}</td>
+                                            <td style="width: 1px; white-space: nowrap; text-align: center;">{{ $item->created_at->format('d-m-Y') }}</td>
+                                            <td class="text-center" style="width: 1px; white-space: nowrap;">
+                                                <a href="javascript:void(0)" onClick="viewFunc({{ $item->id }})"
+                                                    class="btn btn-primary btn-sm"> <i class="fa fa-eye" aria-hidden="true"></i> Lihat</a>
+                                                <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})"
+                                                    class="btn btn-success btn-sm"> <i class="fa fa-pencil" aria-hidden="true"></i> Kemaskini</a>
+                                                <a href="javascript:void(0)" onClick="deleteFunc({{ $item->id }})"
+                                                    class="btn btn-danger btn-sm"> <i class="fa fa-trash" aria-hidden="true"></i> Hapus</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="d-flex justify-content-center mt-3">
+                            {!! $agama->links('pagination::bootstrap-5') !!}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -72,17 +72,11 @@
                                 required>
                             <div class="invalid-feedback" id="nama_agama_error"></div>
                         </div>
-                        <div class="mb-3">
-                            <label for="desc_agama" class="form-label">Deskripsi</label>
-                            <input type="text" class="form-control" id="desc_agama" name="desc_agama" maxlength="100"
-                                required>
-                            <div class="invalid-feedback" id="desc_agama_error"></div>
-                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary" id="btn-save" form="AgamaForm">Simpan</button>
+                    <button type="submit" class="btn btn-primary" id="btn-save" form="AgamaForm"><i class="fas fa-save"></i> Simpan</button>
                 </div>
             </div>
         </div>
@@ -101,7 +95,6 @@
             $('#agama-modal').modal('show');
             $('#id').val('');
             $('#nama_agama').attr('readonly', false);
-            $('#desc_agama').attr('readonly', false);
             $('#btn-save').show();
             clearErrors();
         }
@@ -120,9 +113,7 @@
                     $('#agama-modal').modal('show');
                     $('#id').val(res.id);
                     $('#nama_agama').val(res.nama_agama);
-                    $('#desc_agama').val(res.desc_agama);
                     $('#nama_agama').attr('readonly', false);
-                    $('#desc_agama').attr('readonly', false);
                     $('#btn-save').show();
                     clearErrors();
                 }
@@ -160,9 +151,7 @@
                     $('#agama-modal').modal('show');
                     $('#id').val(res.id);
                     $('#nama_agama').val(res.nama_agama);
-                    $('#desc_agama').val(res.desc_agama);
                     $('#nama_agama').attr('readonly', true);
-                    $('#desc_agama').attr('readonly', true);
                     $('#btn-save').hide();
                     clearErrors();
                 }

@@ -25,7 +25,6 @@ class AgamaRequest extends FormRequest
     {
         return [
             'nama_agama' => 'required|max:10',
-            'desc_agama' => 'required|max:100',
         ];
     }
 
@@ -33,7 +32,6 @@ class AgamaRequest extends FormRequest
     {
         return [
             'nama_agama' => 'nama agama',
-            'desc_agama' => 'deskripsi agama',
         ];
     }
 }

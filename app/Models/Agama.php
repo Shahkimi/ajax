@@ -11,6 +11,5 @@ class Agama extends Model
 
     protected $fillable = [
         'nama_agama',
-        'desc_agama',
     ];
 }

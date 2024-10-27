@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('agamas', function (Blueprint $table) {
             $table->id();
             $table->string('nama_agama');
-            $table->string('desc_agama');
             $table->timestamps();
         });
     }
