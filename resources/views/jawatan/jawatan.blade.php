@@ -6,7 +6,7 @@
             <div class="col-lg-12"> <!-- Increased the width of the card -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2>Jawatan</h2>
-                    <a class="btn btn-success" onClick="add()" href="javascript:void(0)">Tambah Jawatan</a>
+                    <a class="btn btn-success" onClick="add()" href="javascript:void(0)"><i class="fa fa-plus" aria-hidden="true"></i> Tambah Jawatan</a>
                 </div>
 
                 @if ($message = Session::get('success'))
@@ -17,7 +17,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <div class="d-flex justify-content-center mb-4">
+                        <div class="d-flex justify-content-center mb-4 col-6 mx-auto">
                             <form id="searchForm" method="POST" class="w-100">
                                 @csrf
                                 <div class="input-group">
@@ -32,21 +32,21 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Jawatan</th>
-                                    <th>Deskripsi Jawatan</th>
-                                    <th>Tindakan</th>
+                                    <th class="text-center">Deskripsi Jawatan</th>
+                                    <th class="text-center">Tindakan</th>
                                 </tr>
                             </thead>
                             <tbody id="jawatanTableBody">
                                 @foreach ($jawatan as $item)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ strtoupper($item->kod_jawatan) }}</td>
                                         <td>{{ strtoupper($item->desc_jawatan) }}</td>
                                         <td>
                                             <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})"
-                                                class="btn btn-success btn-sm">Kemaskini</a>
+                                                class="btn btn-success btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i> Kemaskini</a>
                                             <a href="javascript:void(0)" onClick="deleteFunc({{ $item->id }})"
-                                                class="btn btn-danger btn-sm">Hapus</a>
+                                                class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i>  Hapus</a>
                                         </td>
                                     </tr>
                                 @endforeach

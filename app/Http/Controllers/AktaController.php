@@ -10,7 +10,7 @@ class AktaController extends Controller
 {
     public function index()
     {
-        $akta = Akta::latest()->paginate(10);
+        $akta = Akta::orderBy('kod_akta', 'asc')->paginate(10);
         return view('akta.akta', compact('akta'));
     }
 
