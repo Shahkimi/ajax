@@ -1,49 +1,52 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-lg-12">
+    <div class="container-fluid d-flex justify-content-center align-items-start min-vh-100 py-4">
+        <div class="row w-100" style="max-width: 1000px;">
+            <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2>Kategori Cuti</h2>
-                    <a class="btn btn-success" onClick="add()" href="javascript:void(0)">Tambah Kategori Cuti</a>
+                    <a class="btn btn-success" onClick="add()" href="javascript:void(0)"><i class="fa fa-plus" aria-hidden="true"></i> Tambah Kategori Cuti</a>
                 </div>
 
                 @if ($message = Session::get('success'))
                     <div class="alert alert-success">
-                        <p>{{ $message }}</p>
+                        <p class="mb-0">{{ $message }}</p>
                     </div>
                 @endif
 
                 <div class="card">
                     <div class="card-body">
-                        <table class="table table-bordered table-striped" id="gcuti">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Kategori Cuti</th>
-                                    <th>Jenis Cuti</th>
-                                    <th>Tindakan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($gcuti as $item)
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped" id="gcuti">
+                                <thead>
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->gkcuti->kategori_cuti }}</td>
-                                        <td>{{ $item->jenis_cuti }}</td>
-                                        <td>
-                                            <a href="javascript:void(0)" onClick="viewFunc({{ $item->id }})" class="btn btn-primary btn-sm">Lihat</a>
-                                            <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})" class="btn btn-success btn-sm">Kemaskini</a>
-                                            <a href="javascript:void(0)" onClick="deleteFunc({{ $item->id }})" class="btn btn-danger btn-sm">Hapus</a>
-                                        </td>
+                                        <th style="white-space: nowrap; text-align: center;">No</th>
+                                        <th style="white-space: nowrap; text-align: center;">Kategori Cuti</th>
+                                        <th style="white-space: nowrap; text-align: center;">Jenis Cuti</th>
+                                        <th class="text-center">Tindakan</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        {{-- <div class="d-flex justify-content-center"> --}}
-                        {!! $gcuti->links('pagination::bootstrap-5') !!}
-                        {{-- </div> --}}
+                                </thead>
+                                <tbody>
+                                    @foreach ($gcuti as $item)
+                                        <tr>
+                                            <td style="width: 1px; white-space: nowrap; text-align: center;">{{ $loop->iteration }}</td>
+                                            <td>{{ $item->gkcuti->kategori_cuti }}</td>
+                                            <td>{{ $item->jenis_cuti }}</td>
+                                            <td class="text-center" style="width: 1px; white-space: nowrap;">
+                                                <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})"
+                                                    class="btn btn-success btn-sm"> <i class="fa fa-pencil" aria-hidden="true"></i> Kemaskini</a>
+                                                <a href="javascript:void(0)" onClick="deleteFunc({{ $item->id }})"
+                                                    class="btn btn-danger btn-sm"> <i class="fa fa-trash" aria-hidden="true"></i> Hapus</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="d-flex justify-content-center mt-3">
+                            {!! $gcuti->links('pagination::bootstrap-5') !!}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -62,13 +65,14 @@
                     <form id="GcutiForm" name="GcutiForm">
                         <input type="hidden" name="id" id="id">
                         <div class="mb-3">
-                            <label for="gkcuti_id" class="form-label">Kategori Cuti Options</label>
+                            <label for="gkcuti_id" class="form-label">Kategori Cuti</label>
                             <select class="form-control" id="gkcuti_id" name="gkcuti_id" required>
                                 <option value="" selected disabled>Pilih Kategori Cuti</option>
                                 @foreach ($gkcutiOptions as $id => $kategori_cuti)
                                     <option value="{{ $id }}">{{ $kategori_cuti }}</option>
                                 @endforeach
                             </select>
+                            <div class="text-center small text-danger"><i class="bi bi-info-circle">i - </i> Bagi Kategori Cuti yang tidak ada, sila tambah di <a href="/gkcuti">Kategori Cuti</a>.</div>
                         </div>
                         <div class="mb-3">
                             <label for="jenis_cuti" class="form-label">Jenis Cuti</label>
