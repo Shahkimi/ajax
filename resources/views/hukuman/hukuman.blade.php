@@ -1,54 +1,54 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-lg-12">
+    <div class="container-fluid d-flex justify-content-center align-items-start min-vh-100 py-4">
+        <div class="row w-100" style="max-width: 1000px;">
+            <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2>Hukuman</h2>
-                    <a class="btn btn-success" onClick="add()" href="javascript:void(0)">Tambah Hukuman</a>
+                    <a class="btn btn-success" onClick="add()" href="javascript:void(0)"><i class="fa fa-plus" aria-hidden="true"></i> Tambah Hukuman</a>
                 </div>
 
                 @if ($message = Session::get('success'))
                     <div class="alert alert-success">
-                        <p>{{ $message }}</p>
+                        <p class="mb-0">{{ $message }}</p>
                     </div>
                 @endif
 
                 <div class="card">
                     <div class="card-body">
-                        <table class="table table-bordered table-striped" id="hukuman">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Hukuman</th>
-                                    <th>Deskripsi</th>
-                                    <th>Tarikh Dicipta</th>
-                                    <th>Tindakan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($hukuman as $item)
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped" id="hukuman">
+                                <thead>
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->kod_hukuman }}</td>
-                                        <td>{{ $item->desc_hukuman }}</td>
-                                        <td>{{ $item->created_at->format('d-m-Y H:i') }}</td>
-                                        <td>
-                                            <a href="javascript:void(0)" onClick="viewFunc({{ $item->id }})"
-                                                class="btn btn-primary btn-sm">Lihat</a>
-                                            <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})"
-                                                class="btn btn-success btn-sm">Kemaskini</a>
-                                            <a href="javascript:void(0)" onClick="deleteFunc({{ $item->id }})"
-                                                class="btn btn-danger btn-sm">Hapus</a>
-                                        </td>
+                                        <th>No</th>
+                                        <th class="text-center" style="width: 1px; white-space: nowrap;">Kod Hukuman</th>
+                                        <th class="text-center">Deskripsi Hukuman</th>
+                                        <th style="white-space: nowrap; text-align: center;">Last Update</th>
+                                        <th class="text-center">Tindakan</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        {{-- <div class="d-flex justify-content-center"> --}}
-                        {!! $hukuman->links('pagination::bootstrap-5') !!}
-                        {{-- </div> --}}
+                                </thead>
+                                <tbody>
+                                    @foreach ($hukuman as $item)
+                                        <tr>
+                                            <td style="width: 1px; white-space: nowrap; text-align: center;">{{ $loop->iteration }}</td>
+                                            <td class="text-center">{{ $item->kod_hukuman }}</td>
+                                            <td>{{ $item->desc_hukuman }}</td>
+                                            <td style="width: 1px; white-space: nowrap; text-align: center;">{{ $item->created_at->format('d-m-Y') }}</td>
+                                            <td class="text-center" style="width: 1px; white-space: nowrap;">
+                                                <a href="javascript:void(0)" onClick="editFunc({{ $item->id }})"
+                                                    class="btn btn-success btn-sm"> <i class="fa fa-pencil" aria-hidden="true"></i> Kemaskini</a>
+                                                <a href="javascript:void(0)" onClick="deleteFunc({{ $item->id }})"
+                                                    class="btn btn-danger btn-sm"> <i class="fa fa-trash" aria-hidden="true"></i> Hapus</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="d-flex justify-content-center mt-3">
+                            {!! $hukuman->links('pagination::bootstrap-5') !!}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -143,29 +143,6 @@
                     }
                 });
             }
-        }
-
-        //View Data
-        function viewFunc(id) {
-            $.ajax({
-                type: "POST",
-                url: "{{ route('hukuman.view') }}",
-                data: {
-                    id: id,
-                    _token: '{{ csrf_token() }}'
-                },
-                dataType: 'json',
-                success: function(res) {
-                    $('#hukumanModalLabel').html("Lihat Hukumuan");
-                    $('#hukuman-modal').modal('show');
-                    $('#id').val(res.id);
-                    $('#kod_hukuman').val(res.kod_hukuman);
-                    $('#desc_hukuman').val(res.desc_hukuman);
-                    $('#kod_hukuman').attr('readonly', true);
-                    $('#desc_hukuman').attr('readonly', true);
-                    $('#btn-save').hide();
-                }
-            });
         }
 
         $('#HukumanForm').submit(function(e) {

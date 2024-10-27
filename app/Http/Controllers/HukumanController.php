@@ -10,7 +10,7 @@ class HukumanController extends Controller
 {
     public function index()
     {
-        $hukuman = Hukuman::latest()->paginate(10);
+        $hukuman = Hukuman::orderBy('kod_hukuman', 'asc')->paginate(10);
         return view('hukuman.hukuman', compact('hukuman'));
     }
 

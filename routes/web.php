@@ -79,7 +79,6 @@ Route::middleware('auth')->group(function () {
         Route::post('store', [Controllers\AktaController::class, 'store'])->name('store');
         Route::post('edit', [Controllers\AktaController::class, 'edit'])->name('edit');
         Route::post('delete', [Controllers\AktaController::class, 'destroy'])->name('destroy');
-        Route::post('view', [Controllers\AktaController::class, 'view'])->name('view');
     });
 
     Route::prefix('status')->name('status.')->group(function () {
@@ -95,7 +94,6 @@ Route::middleware('auth')->group(function () {
         Route::post('store', [Controllers\HukumanController::class, 'store'])->name('store');
         Route::post('edit', [Controllers\HukumanController::class, 'edit'])->name('edit');
         Route::post('delete', [Controllers\HukumanController::class, 'destroy'])->name('destroy');
-        Route::post('view', [Controllers\HukumanController::class, 'view'])->name('view');
     });
 
     Route::prefix('panel')->name('panel.')->group(function () {
