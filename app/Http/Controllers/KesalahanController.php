@@ -15,7 +15,7 @@ class KesalahanController extends Controller
      */
     public function index()
     {
-        $kesalahan = Kesalahan::latest()->paginate(10);
+        $kesalahan = Kesalahan::orderBy('kod_kesalahan', 'asc')->paginate(10);
         return view('kesalahan.kesalahan', compact('kesalahan'));
     }
 
