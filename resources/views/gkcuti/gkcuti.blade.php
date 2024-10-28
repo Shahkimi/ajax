@@ -80,13 +80,13 @@
     </div>
 
     <script type="text/javascript">
+        // Set up CSRF token for all AJAX requests
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
 
-        //Add Data
         function add() {
             $('#GkcutiForm').trigger("reset");
             $('#gkcutiModalLabel').html("Tambah Kategori Cuti");
@@ -96,11 +96,11 @@
             $('#btn-save').show();
         }
 
-        //Edit data
         function editFunc(id) {
             $.ajax({
                 type: "GET",
                 url: "/gkcuti/" + id + "/edit",
+                dataType: 'json',
                 success: function(res) {
                     $('#gkcutiModalLabel').html("Edit Kategori");
                     $('#gkcuti-modal').modal('show');
@@ -108,28 +108,36 @@
                     $('#kategori_cuti').val(res.kategori_cuti);
                     $('#kategori_cuti').attr('readonly', false);
                     $('#btn-save').show();
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                    alert('Error fetching data. Please try again.');
                 }
             });
         }
 
-        //Delete Data
         function deleteFunc(id) {
-            if (confirm("Delete record?")) {
+            if (confirm("Adakah anda pasti ingin menghapus rekod ini?")) {
                 $.ajax({
                     type: "DELETE",
                     url: "/gkcuti/" + id,
+                    dataType: 'json',
                     success: function(res) {
                         window.location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                        alert('Error deleting record. Please try again.');
                     }
                 });
             }
         }
 
-        //View Data
         function viewFunc(id) {
             $.ajax({
                 type: "GET",
                 url: "/gkcuti/" + id,
+                dataType: 'json',
                 success: function(res) {
                     $('#gkcutiModalLabel').html("Lihat Kategori");
                     $('#gkcuti-modal').modal('show');
@@ -137,27 +145,50 @@
                     $('#kategori_cuti').val(res.kategori_cuti);
                     $('#kategori_cuti').attr('readonly', true);
                     $('#btn-save').hide();
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                    alert('Error fetching data. Please try again.');
                 }
             });
         }
 
-        $('#GkcutiForm').submit(function(e) {
-            e.preventDefault();
-            var formData = new FormData(this);
-            $.ajax({
-                type: 'POST',
-                url: "{{ route('gkcuti.store') }}",
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function(data) {
-                    $("#gkcuti-modal").modal('hide');
-                    window.location.reload();
-                },
-                error: function(data) {
-                    console.log(data);
-                }
+        // Form submission
+        $(document).ready(function() {
+            $('#GkcutiForm').submit(function(e) {
+                e.preventDefault();
+
+                var formData = new FormData(this);
+                formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('gkcuti.store') }}",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        $('#gkcuti-modal').modal('hide');
+                        window.location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', xhr.responseText);
+                        if (xhr.status === 419) {
+                            alert(
+                                'Your session has expired. Please refresh the page and try again.'
+                            );
+                        } else if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            let errorMessage = '';
+                            $.each(xhr.responseJSON.errors, function(key, value) {
+                                errorMessage += value + '\n';
+                            });
+                            alert(errorMessage);
+                        } else {
+                            alert('Error saving data. Please try again.');
+                        }
+                    }
+                });
             });
         });
     </script>
