@@ -10,7 +10,7 @@ class GkcutiController extends Controller
 {
     public function index()
     {
-        $gkcuti = Gkcuti::paginate(10);
+        $gkcuti = Gkcuti::orderBy('kategori_cuti', 'desc')->paginate(10);
         return view('gkcuti.gkcuti', compact('gkcuti'));
     }
 
